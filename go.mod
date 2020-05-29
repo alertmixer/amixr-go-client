@@ -1,4 +1,4 @@
-module github.com/alertmixer/go-client
+module github.com/alertmixer/amixr-go-client
 
 go 1.14
 
