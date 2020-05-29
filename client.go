@@ -37,6 +37,9 @@ type Client struct {
 }
 
 func NewClient(token string) (*Client, error) {
+	if token == "" {
+		return nil, fmt.Errorf("Token required")
+	}
 	client, err := newClient()
 	if err != nil {
 		return nil, err
