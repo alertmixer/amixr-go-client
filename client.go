@@ -23,6 +23,12 @@ type ListOptions struct {
 	Page int `url:"page,omitempty" json:"page,omitempty"`
 }
 
+type PaginatedResponse struct {
+	Count    int     `json:"count"`
+	Next     *string `json:"next"`
+	Previous *string `json:"previous"`
+}
+
 type Client struct {
 	// HTTP client used to communicate with the API.
 	client  *retryablehttp.Client
@@ -172,6 +178,9 @@ func CheckResponse(r *http.Response) error {
 			errorResponse.Message = parseError(rawError)
 		}
 	}
+	if err != nil {
+		return err
+	}
 
 	return errorResponse
 }
@@ -224,4 +233,9 @@ func (c *Client) retryHTTPCheck(ctx context.Context, resp *http.Response, err er
 		return true, nil
 	}
 	return false, nil
+}
+
+func (c *Client) BaseURL() *url.URL {
+	u := *c.baseURL
+	return &u
 }

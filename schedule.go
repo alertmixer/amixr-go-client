@@ -23,10 +23,8 @@ func NewScheduleService(client *Client) *ScheduleService {
 }
 
 type PaginatedSchedulesResponse struct {
-	Count     int        `json:"count"`
-	Next      string     `json:"next"`
-	Previous  string     `json:"previous"`
-	Schedules []Schedule `json:"results"`
+	PaginatedResponse
+	Schedules []*Schedule `json:"results"`
 }
 
 type Schedule struct {

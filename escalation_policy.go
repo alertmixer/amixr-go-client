@@ -24,10 +24,8 @@ func NewEscalationService(client *Client) *EscalationService {
 }
 
 type PaginatedEscalationsResponse struct {
-	Count       int          `json:"count"`
-	Next        string       `json:"next"`
-	Previous    string       `json:"previous"`
-	Escalations []Escalation `json:"results"`
+	PaginatedResponse
+	Escalations []*Escalation `json:"results"`
 }
 
 type Escalation struct {
@@ -106,9 +104,7 @@ type CreateEscalationOptions struct {
 // http://api-docs.amixr.io/#create-escalation
 func (service *EscalationService) CreateEscalation(opt *CreateEscalationOptions) (*Escalation, *http.Response, error) {
 	log.Printf("[DEBUG] create amixr escalation")
-	u := fmt.Sprintf("%s", service.url)
-	log.Printf("[DEBUG] %s", u)
-
+	u := fmt.Sprintf("%s/", service.url)
 	req, err := service.client.NewRequest("POST", u, opt)
 	if err != nil {
 		return nil, nil, err
