@@ -23,10 +23,8 @@ func NewUserService(client *Client) *UserService {
 }
 
 type PaginatedUsersResponse struct {
-	Count    int    `json:"count"`
-	Next     string `json:"next"`
-	Previous string `json:"previous"`
-	Users    []User `json:"results"`
+	PaginatedResponse
+	Users []*User `json:"results"`
 }
 
 type User struct {

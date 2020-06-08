@@ -24,10 +24,8 @@ func NewEscalationService(client *Client) *EscalationService {
 }
 
 type PaginatedEscalationsResponse struct {
-	Count       int          `json:"count"`
-	Next        string       `json:"next"`
-	Previous    string       `json:"previous"`
-	Escalations []Escalation `json:"results"`
+	PaginatedResponse
+	Escalations []*Escalation `json:"results"`
 }
 
 type Escalation struct {
@@ -35,10 +33,10 @@ type Escalation struct {
 	RouteId                  string    `json:"route_id"`
 	Position                 int       `json:"position"`
 	Type                     string    `json:"type"`
-	Duration                 string    `json:"duration"`
+	Duration                 *int      `json:"duration"`
 	PersonsToNotify          *[]string `json:"persons_to_notify"`
 	PersonsToNotifyEachTime  *[]string `json:"persons_to_notify_next_each_time"`
-	NotifyOnCallFromSchedule string    `json:"notify_on_call_from_schedule"`
+	NotifyOnCallFromSchedule *string   `json:"notify_on_call_from_schedule"`
 }
 
 // Empty struct is here in case we want to add request params to ListEscalations.
@@ -93,8 +91,7 @@ type CreateEscalationOptions struct {
 	RouteId                     string    `json:"route_id,omitempty"`
 	Position                    *int      `json:"position,omitempty"`
 	Type                        string    `json:"type,omitempty"`
-	Duration                    string    `json:"duration,omitempty"`
-	DefaultChannelId            string    `json:"default_channel_id,omitempty"`
+	Duration                    int       `json:"duration,omitempty"`
 	PersonsToNotify             *[]string `json:"persons_to_notify,omitempty"`
 	PersonsToNotifyNextEachTime *[]string `json:"persons_to_notify_next_each_time,omitempty"`
 	NotifyOnCallFromSchedule    string    `json:"notify_on_call_from_schedule,omitempty"`
@@ -106,9 +103,7 @@ type CreateEscalationOptions struct {
 // http://api-docs.amixr.io/#create-escalation
 func (service *EscalationService) CreateEscalation(opt *CreateEscalationOptions) (*Escalation, *http.Response, error) {
 	log.Printf("[DEBUG] create amixr escalation")
-	u := fmt.Sprintf("%s", service.url)
-	log.Printf("[DEBUG] %s", u)
-
+	u := fmt.Sprintf("%s/", service.url)
 	req, err := service.client.NewRequest("POST", u, opt)
 	if err != nil {
 		return nil, nil, err
@@ -129,7 +124,7 @@ func (service *EscalationService) CreateEscalation(opt *CreateEscalationOptions)
 type UpdateEscalationOptions struct {
 	Position                 *int      `json:"position,omitempty"`
 	Type                     string    `json:"type,omitempty"`
-	Duration                 string    `json:"duration,omitempty"`
+	Duration                 int       `json:"duration,omitempty"`
 	PersonsToNotify          *[]string `json:"persons_to_notify,omitempty"`
 	PersonsToNotifyEachTime  *[]string `json:"persons_to_notify_next_each_time,omitempty"`
 	NotifyOnCallFromSchedule string    `json:"notify_on_call_from_schedule,omitempty"`

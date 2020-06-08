@@ -2,6 +2,7 @@ package amixr
 
 import (
 	"fmt"
+	"log"
 	"net/http"
 )
 
@@ -23,33 +24,32 @@ func NewIntegrationService(client *Client) *IntegrationService {
 }
 
 type PaginatedIntegrationsResponse struct {
-	Count        int           `json:"count"`
-	Next         string        `json:"next"`
-	Previous     string        `json:"previous"`
-	Integrations []Integration `json:"results"`
+	PaginatedResponse
+	Integrations []*Integration `json:"results"`
 }
 
 type Integration struct {
-	ID             string    `json:"id"`
-	Name           string    `json:"name"`
-	Link           string    `json:"link"`
-	IncidentsCount int       `json:"incidents_count"`
-	Type           string    `json:"type"`
-	DefaultRouteId string    `json:"default_route_id"`
-	Templates      Templates `json:"templates"`
+	ID             string     `json:"id"`
+	Name           string     `json:"name"`
+	Link           string     `json:"link"`
+	IncidentsCount int        `json:"incidents_count"`
+	Type           string     `json:"type"`
+	DefaultRouteId string     `json:"default_route_id"`
+	Templates      *Templates `json:"templates"`
 }
 
 type Templates struct {
-	GroupingKey   string `json:"grouping_key"`
-	ResolveSignal string `json:"resolve_signal"`
-	Slack         struct {
-		Title    string `json:"title"`
-		Message  string `json:"message"`
-		ImageURL string `json:"image_url"`
-	} `json:"slack"`
+	GroupingKey   string         `json:"grouping_key"`
+	ResolveSignal string         `json:"resolve_signal"`
+	Slack         *SlackTemplate `json:"slack"`
 }
 
-// Empty struct is here in case we want to add request params to ListIntegrations.
+type SlackTemplate struct {
+	Title    string `json:"title"`
+	Message  string `json:"message"`
+	ImageURL string `json:"image_url"`
+}
+
 type ListIntegrationOptions struct {
 	ListOptions
 }
@@ -106,6 +106,7 @@ type CreateIntegrationOptions struct {
 //
 // http://api-docs.amixr.io/#create-integration
 func (service *IntegrationService) CreateIntegration(opt *CreateIntegrationOptions) (*Integration, *http.Response, error) {
+	log.Printf("[DEBUG] create amixr integration")
 	u := fmt.Sprintf("%s/", service.url)
 
 	req, err := service.client.NewRequest("POST", u, opt)
