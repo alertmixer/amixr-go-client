@@ -89,10 +89,9 @@ func (service *EscalationService) GetEscalation(id string, opt *GetEscalationOpt
 
 type CreateEscalationOptions struct {
 	RouteId                     string    `json:"route_id,omitempty"`
-	Position                    int       `json:"position,omitempty"`
+	Position                    *int      `json:"position,omitempty"`
 	Type                        string    `json:"type,omitempty"`
 	Duration                    int       `json:"duration,omitempty"`
-	DefaultChannelId            string    `json:"default_channel_id,omitempty"`
 	PersonsToNotify             *[]string `json:"persons_to_notify,omitempty"`
 	PersonsToNotifyNextEachTime *[]string `json:"persons_to_notify_next_each_time,omitempty"`
 	NotifyOnCallFromSchedule    string    `json:"notify_on_call_from_schedule,omitempty"`
@@ -123,7 +122,7 @@ func (service *EscalationService) CreateEscalation(opt *CreateEscalationOptions)
 }
 
 type UpdateEscalationOptions struct {
-	Position                 int       `json:"position,omitempty"`
+	Position                 *int      `json:"position,omitempty"`
 	Type                     string    `json:"type,omitempty"`
 	Duration                 int       `json:"duration,omitempty"`
 	PersonsToNotify          *[]string `json:"persons_to_notify,omitempty"`
