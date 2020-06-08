@@ -55,10 +55,10 @@ func TestCreateEscalation(t *testing.T) {
 		testRequestMethod(t, r, "POST")
 		fmt.Fprint(w, testEscalationBody)
 	})
-
+	tmp := 0
 	createOptions := &CreateEscalationOptions{
 		Type:        "wait",
-		Position:    0,
+		Position:    &tmp,
 		Duration:    60,
 		ManualOrder: true,
 		RouteId:     "RIYGUJXCPFHXY",
@@ -180,8 +180,9 @@ func TestUpdateEscalation(t *testing.T) {
 		testRequestMethod(t, r, "PUT")
 		fmt.Fprint(w, testUpdatedEscalationBody)
 	})
+	tmp := 1
 	options := &UpdateEscalationOptions{
-		Position: 1,
+		Position: &tmp,
 	}
 
 	escalation, _, err := client.Escalations.UpdateEscalation("E3GA6SJETWWJS", options)
