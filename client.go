@@ -15,7 +15,7 @@ import (
 )
 
 const (
-	defaultBaseURL = "https://develop.amixr.io/"
+	defaultBaseURL = "https://amixr.io/"
 	apiVersionPath = "api/v1/"
 )
 

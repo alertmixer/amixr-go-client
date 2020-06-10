@@ -72,7 +72,7 @@ func TestCheckResponse(t *testing.T) {
 		t.Fatal("Expected error response.")
 	}
 
-	want := "GET https://develop.amixr.io/api/v1/test: 400 {detail: error}"
+	want := "GET https://amixr.io/api/v1/test: 400 {detail: error}"
 
 	if errResp.Error() != want {
 		t.Errorf("Expected error: %s, got %s", want, errResp.Error())
