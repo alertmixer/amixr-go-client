@@ -39,6 +39,7 @@ type Client struct {
 	Escalations    *EscalationService
 	Users          *UserService
 	Schedules      *ScheduleService
+	Routes         *RouteService
 	disableRetries bool
 }
 
@@ -73,6 +74,7 @@ func newClient() (*Client, error) {
 	c.Escalations = NewEscalationService(c)
 	c.Users = NewUserService(c)
 	c.Schedules = NewScheduleService(c)
+	c.Routes = NewRouteService(c)
 
 	return c, nil
 }
