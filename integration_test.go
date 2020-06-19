@@ -7,6 +7,8 @@ import (
 	"testing"
 )
 
+var key = "key"
+var signal = "signal"
 var testIntegration = &Integration{
 	ID:             "CFRPV98RPR1U8",
 	Name:           "Test Grafana",
@@ -15,12 +17,12 @@ var testIntegration = &Integration{
 	DefaultRouteId: "RIYGUJXCPFHXY",
 	IncidentsCount: 0,
 	Templates: &Templates{
-		"key",
-		"signal",
+		&key,
+		&signal,
 		&SlackTemplate{
-			"",
-			"",
-			"",
+			nil,
+			nil,
+			nil,
 		},
 	},
 }
@@ -36,9 +38,9 @@ var testIntegrationBody = `{
 	"grouping_key": "key",
 	"resolve_signal": "signal",
 	"slack": {
-		"title": "",
-		"message": "",
-		"image_url": ""
+		"title": null,
+		"message": null,
+		"image_url": null
 		}
 	}
 }`
