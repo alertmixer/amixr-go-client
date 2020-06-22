@@ -40,6 +40,7 @@ type Client struct {
 	Users          *UserService
 	Schedules      *ScheduleService
 	Routes         *RouteService
+	SlackChannels  *SlackChannelService
 	disableRetries bool
 }
 
@@ -75,6 +76,7 @@ func newClient() (*Client, error) {
 	c.Users = NewUserService(c)
 	c.Schedules = NewScheduleService(c)
 	c.Routes = NewRouteService(c)
+	c.SlackChannels = NewSlackChannelService(c)
 
 	return c, nil
 }
