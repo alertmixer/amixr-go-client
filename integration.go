@@ -39,15 +39,15 @@ type Integration struct {
 }
 
 type Templates struct {
-	GroupingKey   string         `json:"grouping_key"`
-	ResolveSignal string         `json:"resolve_signal"`
+	GroupingKey   *string        `json:"grouping_key"`
+	ResolveSignal *string        `json:"resolve_signal"`
 	Slack         *SlackTemplate `json:"slack"`
 }
 
 type SlackTemplate struct {
-	Title    string `json:"title"`
-	Message  string `json:"message"`
-	ImageURL string `json:"image_url"`
+	Title    *string `json:"title"`
+	Message  *string `json:"message"`
+	ImageURL *string `json:"image_url"`
 }
 
 type ListIntegrationOptions struct {
@@ -98,8 +98,9 @@ func (service *IntegrationService) GetIntegration(id string, opt *GetIntegration
 }
 
 type CreateIntegrationOptions struct {
-	Name string `url:"name,omitempty" json:"name,omitempty"`
-	Type string `url:"type,omitempty" json:"type,omitempty"`
+	Name      string     `url:"name,omitempty" json:"name,omitempty"`
+	Type      string     `url:"type,omitempty" json:"type,omitempty"`
+	Templates *Templates `url:"type,omitempty" json:"templates,omitempty"`
 }
 
 // Create integration with given name and type
