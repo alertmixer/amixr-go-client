@@ -37,6 +37,8 @@ type Escalation struct {
 	PersonsToNotify          *[]string `json:"persons_to_notify"`
 	PersonsToNotifyEachTime  *[]string `json:"persons_to_notify_next_each_time"`
 	NotifyOnCallFromSchedule *string   `json:"notify_on_call_from_schedule"`
+	ActionToTrigger          *string   `json:"action_to_trigger"`
+	GroupToNotify            *string   `json:"group_to_notify"`
 }
 
 // Empty struct is here in case we want to add request params to ListEscalations.
@@ -95,6 +97,8 @@ type CreateEscalationOptions struct {
 	PersonsToNotify             *[]string `json:"persons_to_notify,omitempty"`
 	PersonsToNotifyNextEachTime *[]string `json:"persons_to_notify_next_each_time,omitempty"`
 	NotifyOnCallFromSchedule    string    `json:"notify_on_call_from_schedule,omitempty"`
+	ActionToTrigger             string    `json:"action_to_trigger,omitempty"`
+	GroupToNotify               string    `json:"group_to_notify,omitempty"`
 	ManualOrder                 bool      `url:"manual_order,omitempty" json:"manual_order,omitempty"`
 }
 
@@ -128,6 +132,8 @@ type UpdateEscalationOptions struct {
 	PersonsToNotify          *[]string `json:"persons_to_notify,omitempty"`
 	PersonsToNotifyEachTime  *[]string `json:"persons_to_notify_next_each_time,omitempty"`
 	NotifyOnCallFromSchedule string    `json:"notify_on_call_from_schedule,omitempty"`
+	ActionToTrigger          string    `json:"action_to_trigger,omitempty"`
+	GroupToNotify            string    `json:"group_to_notify,omitempty"`
 	ManualOrder              bool      `url:"manual_order,omitempty" json:"manual_order,omitempty"`
 }
 
