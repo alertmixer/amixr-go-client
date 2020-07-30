@@ -4,14 +4,20 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
-	"github.com/google/go-querystring/query"
-	"github.com/hashicorp/go-retryablehttp"
 	"io"
 	"io/ioutil"
+	"log"
+	"math/rand"
 	"net/http"
 	"net/url"
 	"sort"
+	"strconv"
 	"strings"
+	"time"
+
+	"github.com/google/go-querystring/query"
+	"github.com/hashicorp/go-retryablehttp"
+	"golang.org/x/time/rate"
 )
 
 const (
@@ -31,17 +37,19 @@ type PaginatedResponse struct {
 
 type Client struct {
 	// HTTP client used to communicate with the API.
-	client  *retryablehttp.Client
-	token   string
-	baseURL *url.URL
-	// List of Services. Keep in sync with func newClient
-	Integrations   *IntegrationService
-	Escalations    *EscalationService
-	Users          *UserService
-	Schedules      *ScheduleService
-	Routes         *RouteService
-	SlackChannels  *SlackChannelService
+	client         *retryablehttp.Client
+	token          string
+	baseURL        *url.URL
 	disableRetries bool
+	limiter        *rate.Limiter
+
+	// List of Services. Keep in sync with func newClient
+	Integrations  *IntegrationService
+	Escalations   *EscalationService
+	Users         *UserService
+	Schedules     *ScheduleService
+	Routes        *RouteService
+	SlackChannels *SlackChannelService
 }
 
 func NewClient(token string) (*Client, error) {
@@ -52,8 +60,6 @@ func NewClient(token string) (*Client, error) {
 	if err != nil {
 		return nil, err
 	}
-	// retries disabled for test/develop purposes. Normally should be enabled.
-	client.disableRetries = true
 	client.token = token
 	return client, nil
 }
@@ -63,9 +69,16 @@ func newClient() (*Client, error) {
 
 	// Configure the HTTP client.
 	c.client = &retryablehttp.Client{
-		CheckRetry: c.retryHTTPCheck,
-		RetryMax:   1,
+		Backoff:      c.retryHTTPBackoff,
+		CheckRetry:   c.retryHTTPCheck,
+		RetryWaitMin: 100 * time.Millisecond,
+		RetryWaitMax: 400 * time.Millisecond,
+		RetryMax:     5,
 	}
+	// https://docs.amixr.io/#/rate-limits
+	baseLimit := 50.0 / 60
+	limit := rate.Limit(baseLimit)
+	c.limiter = rate.NewLimiter(limit, 50)
 
 	// Set the default base URL. _ suppress error handling
 	_ = c.setBaseURL(defaultBaseURL + apiVersionPath)
@@ -138,6 +151,11 @@ func (c *Client) NewRequest(method, path string, opt interface{}) (*retryablehtt
 // JSON decoded and stored in the value pointed to by v, or returned as an
 // error if an API error has occurred.
 func (c *Client) Do(req *retryablehttp.Request, v interface{}) (*http.Response, error) {
+	err := c.limiter.Wait(req.Context())
+	if err != nil {
+		log.Println("limiter")
+		return nil, err
+	}
 
 	resp, err := c.client.Do(req)
 	if err != nil {
@@ -237,6 +255,30 @@ func (c *Client) retryHTTPCheck(ctx context.Context, resp *http.Response, err er
 		return true, nil
 	}
 	return false, nil
+}
+
+func (c *Client) retryHTTPBackoff(min, max time.Duration, attemptNum int, resp *http.Response) time.Duration {
+	if resp != nil && resp.StatusCode == 429 {
+		return rateLimitBackoff(min, max, attemptNum, resp)
+	}
+
+	return retryablehttp.LinearJitterBackoff(min, max, attemptNum, resp)
+}
+
+func rateLimitBackoff(min, max time.Duration, attemptNum int, resp *http.Response) time.Duration {
+	rnd := rand.New(rand.NewSource(time.Now().UnixNano()))
+	jitter := time.Duration(rnd.Float64() * float64(max-min))
+	log.Printf("[DEBUG] ratelimited call")
+	if resp != nil {
+		if v := resp.Header.Get("RateLimit-Reset"); v != "" {
+			if reset, _ := strconv.ParseInt(v, 10, 64); reset > 0 {
+				log.Printf("[DEBUG] reset in '%d", reset)
+				min = time.Duration(reset) * time.Second
+			}
+		}
+	}
+
+	return min + jitter
 }
 
 func (c *Client) BaseURL() *url.URL {
