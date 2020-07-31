@@ -30,12 +30,14 @@ type UserGroup struct {
 }
 
 type SlackUserGroup struct {
-	ID   string `json:"id"`
-	Name string `json:"name"`
+	ID     string `json:"id"`
+	Name   string `json:"name"`
+	Handle string `json:"handle"`
 }
 
 type ListUserGroupOptions struct {
 	ListOptions
+	SlackHandle string `url:"slack_handle,omitempty" json:"slack_handle,omitempty"`
 }
 
 // ListUserGroups gets all UserGroups for authorized team
