@@ -40,20 +40,8 @@ type Client struct {
 	client         *retryablehttp.Client
 	token          string
 	baseURL        *url.URL
-  disableRetries bool
+	disableRetries bool
 	limiter        *rate.Limiter
-	// List of Services. Keep in sync with func newClient
-	Integrations   *IntegrationService
-	Escalations    *EscalationService
-	Users          *UserService
-	Schedules      *ScheduleService
-	Routes         *RouteService
-	SlackChannels  *SlackChannelService
-	UserGroups     *UserGroupService
-	CustomActions  *CustomActionService
-
-
-
 	// List of Services. Keep in sync with func newClient
 	Integrations  *IntegrationService
 	Escalations   *EscalationService
@@ -61,6 +49,8 @@ type Client struct {
 	Schedules     *ScheduleService
 	Routes        *RouteService
 	SlackChannels *SlackChannelService
+	UserGroups    *UserGroupService
+	CustomActions *CustomActionService
 }
 
 func NewClient(token string) (*Client, error) {
