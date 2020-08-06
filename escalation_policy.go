@@ -32,7 +32,7 @@ type Escalation struct {
 	ID                       string    `json:"id"`
 	RouteId                  string    `json:"route_id"`
 	Position                 int       `json:"position"`
-	Type                     string    `json:"type"`
+	Type                     *string   `json:"type"`
 	Duration                 *int      `json:"duration"`
 	PersonsToNotify          *[]string `json:"persons_to_notify"`
 	PersonsToNotifyEachTime  *[]string `json:"persons_to_notify_next_each_time"`
@@ -95,7 +95,7 @@ func (service *EscalationService) GetEscalation(id string, opt *GetEscalationOpt
 type CreateEscalationOptions struct {
 	RouteId                     string    `json:"route_id,omitempty"`
 	Position                    *int      `json:"position,omitempty"`
-	Type                        string    `json:"type,omitempty"`
+	Type                        *string   `json:"type"`
 	Duration                    int       `json:"duration,omitempty"`
 	PersonsToNotify             *[]string `json:"persons_to_notify,omitempty"`
 	PersonsToNotifyNextEachTime *[]string `json:"persons_to_notify_next_each_time,omitempty"`
@@ -133,7 +133,7 @@ func (service *EscalationService) CreateEscalation(opt *CreateEscalationOptions)
 
 type UpdateEscalationOptions struct {
 	Position                 *int      `json:"position,omitempty"`
-	Type                     string    `json:"type,omitempty"`
+	Type                     *string   `json:"type"`
 	Duration                 int       `json:"duration,omitempty"`
 	PersonsToNotify          *[]string `json:"persons_to_notify,omitempty"`
 	PersonsToNotifyEachTime  *[]string `json:"persons_to_notify_next_each_time,omitempty"`
