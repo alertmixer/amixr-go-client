@@ -8,12 +8,14 @@ import (
 )
 
 var duration = 60
+var typeWait = "wait"
+var typeNotifyPersons = "notify_persons"
 
 var testEscalation = &Escalation{
 	ID:       "E3GA6SJETWWJS",
 	RouteId:  "RIYGUJXCPFHXY",
 	Position: 0,
-	Type:     "wait",
+	Type:     &typeWait,
 	Duration: &duration,
 }
 
@@ -21,7 +23,7 @@ var testEscalationEmptyDuration = &Escalation{
 	ID:       "E3GA6SJETWWJS",
 	RouteId:  "RIYGUJXCPFHXY",
 	Position: 0,
-	Type:     "notify_persons",
+	Type:     &typeNotifyPersons,
 }
 
 var testEscalationBody = `{
@@ -57,7 +59,7 @@ func TestCreateEscalation(t *testing.T) {
 	})
 	tmp := 0
 	createOptions := &CreateEscalationOptions{
-		Type:        "wait",
+		Type:        &typeWait,
 		Position:    &tmp,
 		Duration:    60,
 		ManualOrder: true,
@@ -195,7 +197,7 @@ func TestUpdateEscalation(t *testing.T) {
 		ID:       "E3GA6SJETWWJS",
 		RouteId:  "RIYGUJXCPFHXY",
 		Position: 1,
-		Type:     "wait",
+		Type:     &typeWait,
 		Duration: &duration,
 	}
 
