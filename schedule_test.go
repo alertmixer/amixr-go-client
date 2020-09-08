@@ -7,20 +7,80 @@ import (
 	"testing"
 )
 
+var testScheduleSlackChannelId = "TEST_SLACK_CHANNEL_ID"
+var iCalUrl = "https://example.com/ical.ics"
+
 var testSchedule = &Schedule{
-	ID:        "SBM7DV7BKFUYU",
-	Type:      "ical",
+	ID:       "SBM7DV7BKFUYU",
+	Name:     "Test Schedule",
+	Type:     "ical",
+	TimeZone: "UTC",
+	ICalUrl:  &iCalUrl,
+	Slack: &SlackSchedule{
+		&testScheduleSlackChannelId,
+	},
 	OnCallNow: []string{"U4DNY931HHJS5", "U6RV9WPSL6DFW"},
 }
 
 var testScheduleBody = `{
 	"id": "SBM7DV7BKFUYU",
 	"type": "ical",
+	"name": "Test Schedule",
+	"time_zone": "UTC",
+	"ical_url": "https://example.com/ical.ics",
+	"slack": {
+		"channel_id": "TEST_SLACK_CHANNEL_ID"
+	},
 	"on_call_now": [
-	"U4DNY931HHJS5",
-	"U6RV9WPSL6DFW"
+		"U4DNY931HHJS5",
+		"U6RV9WPSL6DFW"
 	]
 }`
+
+func TestCreateSchedule(t *testing.T) {
+	mux, server, client := setup(t)
+	defer teardown(server)
+
+	mux.HandleFunc("/api/v1/schedules/", func(w http.ResponseWriter, r *http.Request) {
+		testRequestMethod(t, r, "POST")
+		fmt.Fprint(w, testScheduleBody)
+	})
+
+	createOptions := &CreateScheduleOptions{
+		Name:     "Test Schedule",
+		TimeZone: "UTC",
+		Slack: &SlackSchedule{
+			&testScheduleSlackChannelId,
+		},
+	}
+	schedule, _, err := client.Schedules.CreateSchedule(createOptions)
+
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	want := testSchedule
+
+	if !reflect.DeepEqual(want, schedule) {
+		t.Errorf("returned\n %+v\n want\n %+v\n", schedule, want)
+	}
+}
+
+func TestDeleteSchedule(t *testing.T) {
+	mux, server, client := setup(t)
+	defer teardown(server)
+
+	mux.HandleFunc("/api/v1/schedules/SBM7DV7BKFUYU/", func(w http.ResponseWriter, r *http.Request) {
+		testRequestMethod(t, r, "DELETE")
+	})
+
+	options := &DeleteScheduleOptions{}
+
+	_, err := client.Schedules.DeleteSchedule("SBM7DV7BKFUYU", options)
+	if err != nil {
+		t.Fatal(err)
+	}
+}
 
 func TestListSchedules(t *testing.T) {
 	mux, server, client := setup(t)
@@ -50,5 +110,29 @@ func TestListSchedules(t *testing.T) {
 	}
 	if !reflect.DeepEqual(want, schedules) {
 		t.Errorf("returned\n %+v, \nwant\n %+v", schedules, want)
+	}
+}
+
+func TestGetSchedule(t *testing.T) {
+	mux, server, client := setup(t)
+	defer teardown(server)
+
+	mux.HandleFunc("/api/v1/schedules/SBM7DV7BKFUYU/", func(w http.ResponseWriter, r *http.Request) {
+		testRequestMethod(t, r, "GET")
+		fmt.Fprint(w, testScheduleBody)
+	})
+
+	options := &GetScheduleOptions{}
+
+	schedule, _, err := client.Schedules.GetSchedule("SBM7DV7BKFUYU", options)
+
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	want := testSchedule
+
+	if !reflect.DeepEqual(want, schedule) {
+		t.Errorf("returned\n %+v\n want\n %+v\n", schedule, want)
 	}
 }
