@@ -51,6 +51,7 @@ type Client struct {
 	SlackChannels *SlackChannelService
 	UserGroups    *UserGroupService
 	CustomActions *CustomActionService
+	OnCallShifts  *OnCallShiftService
 }
 
 func NewClient(token string) (*Client, error) {
@@ -93,6 +94,7 @@ func newClient() (*Client, error) {
 	c.SlackChannels = NewSlackChannelService(c)
 	c.UserGroups = NewUserGroupService(c)
 	c.CustomActions = NewCustomActionService(c)
+	c.OnCallShifts = NewOnCallShiftService(c)
 
 	return c, nil
 }
