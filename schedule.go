@@ -2,6 +2,7 @@ package amixr
 
 import (
 	"fmt"
+	"log"
 	"net/http"
 )
 
@@ -28,10 +29,17 @@ type PaginatedSchedulesResponse struct {
 }
 
 type Schedule struct {
-	ID        string   `json:"id"`
-	Type      string   `json:"type"`
-	OnCallNow []string `json:"on_call_now"`
-	Name      string   `json:"name"`
+	ID        string         `json:"id"`
+	Type      string         `json:"type"`
+	OnCallNow []string       `json:"on_call_now"`
+	Name      string         `json:"name"`
+	ICalUrl   *string        `json:"ical_url"`
+	TimeZone  string         `json:"time_zone"`
+	Slack     *SlackSchedule `json:"slack"`
+}
+
+type SlackSchedule struct {
+	ChannelId *string `json:"channel_id"`
 }
 
 type ListScheduleOptions struct {
@@ -57,4 +65,94 @@ func (service *ScheduleService) ListSchedules(opt *ListScheduleOptions) (*Pagina
 	}
 
 	return schedules, resp, err
+}
+
+type GetScheduleOptions struct {
+}
+
+// Get schedule shift by given id
+func (service *ScheduleService) GetSchedule(id string, opt *GetScheduleOptions) (*Schedule, *http.Response, error) {
+	u := fmt.Sprintf("%s/%s/", service.url, id)
+
+	req, err := service.client.NewRequest("GET", u, opt)
+	if err != nil {
+		return nil, nil, err
+	}
+
+	schedule := new(Schedule)
+	resp, err := service.client.Do(req, schedule)
+	if err != nil {
+		return nil, resp, err
+	}
+
+	return schedule, resp, err
+}
+
+type CreateScheduleOptions struct {
+	Name     string         `json:"name"`
+	ICalUrl  *string        `json:"ical_url"`
+	TimeZone string         `json:"time_zone,omitempty"`
+	Slack    *SlackSchedule `json:"slack"`
+}
+
+// Create schedule with given name
+func (service *ScheduleService) CreateSchedule(opt *CreateScheduleOptions) (*Schedule, *http.Response, error) {
+	log.Printf("[DEBUG] create amixr schedule")
+	u := fmt.Sprintf("%s/", service.url)
+	req, err := service.client.NewRequest("POST", u, opt)
+	if err != nil {
+		return nil, nil, err
+	}
+
+	schedule := new(Schedule)
+
+	resp, err := service.client.Do(req, schedule)
+
+	if err != nil {
+		return nil, resp, err
+	}
+
+	return schedule, resp, err
+}
+
+type UpdateScheduleOptions struct {
+	Name     string         `json:"name"`
+	ICalUrl  *string        `json:"ical_url"`
+	TimeZone string         `json:"time_zone,omitempty"`
+	Slack    *SlackSchedule `json:"slack"`
+}
+
+// Updates schedule
+func (service *ScheduleService) UpdateSchedule(id string, opt *UpdateScheduleOptions) (*Schedule, *http.Response, error) {
+	u := fmt.Sprintf("%s/%s/", service.url, id)
+
+	req, err := service.client.NewRequest("PUT", u, opt)
+	if err != nil {
+		return nil, nil, err
+	}
+
+	schedule := new(Schedule)
+	resp, err := service.client.Do(req, schedule)
+	if err != nil {
+		return nil, resp, err
+	}
+
+	return schedule, resp, err
+}
+
+type DeleteScheduleOptions struct {
+}
+
+// Deletes schedule
+func (service *ScheduleService) DeleteSchedule(id string, opt *DeleteScheduleOptions) (*http.Response, error) {
+
+	u := fmt.Sprintf("%s/%s/", service.url, id)
+
+	req, err := service.client.NewRequest("DELETE", u, opt)
+	if err != nil {
+		return nil, err
+	}
+
+	resp, err := service.client.Do(req, nil)
+	return resp, err
 }
