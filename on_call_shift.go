@@ -25,20 +25,21 @@ type PaginatedOnCallShiftsResponse struct {
 }
 
 type OnCallShift struct {
-	ID         string    `json:"id"`
-	ScheduleId string    `json:"schedule_id"`
-	Type       string    `json:"type"`
-	Name       string    `json:"name"`
-	Level      int       `json:"level"`
-	Start      string    `json:"start"`
-	Duration   int       `json:"duration"`
-	Frequency  *string   `json:"frequency"`
-	Users      *[]string `json:"users"`
-	Interval   *int      `json:"interval"`
-	WeekStart  *string   `json:"week_start"`
-	ByDay      *[]string `json:"by_day"`
-	ByMonth    *[]int    `json:"by_month"`
-	ByMonthday *[]int    `json:"by_monthday"`
+	ID           string      `json:"id"`
+	ScheduleId   string      `json:"schedule_id"`
+	Type         string      `json:"type"`
+	Name         string      `json:"name"`
+	Level        int         `json:"level"`
+	Start        string      `json:"start"`
+	Duration     int         `json:"duration"`
+	Frequency    *string     `json:"frequency"`
+	Users        *[]string   `json:"users"`
+	Interval     *int        `json:"interval"`
+	WeekStart    *string     `json:"week_start"`
+	ByDay        *[]string   `json:"by_day"`
+	ByMonth      *[]int      `json:"by_month"`
+	ByMonthday   *[]int      `json:"by_monthday"`
+	RollingUsers *[][]string `json:"rolling_users"`
 }
 
 type ListOnCallShiftOptions struct {
@@ -87,20 +88,21 @@ func (service *OnCallShiftService) GetOnCallShift(id string, opt *GetOnCallShift
 }
 
 type CreateOnCallShiftOptions struct {
-	ScheduleId string    `json:"schedule_id"`
-	Type       string    `json:"type"`
-	Name       string    `json:"name"`
-	Level      *int      `json:"level,omitempty"`
-	Start      string    `json:"start"`
-	Duration   int       `json:"duration"`
-	Frequency  *string   `json:"frequency"`
-	Users      *[]string `json:"users"`
-	Interval   *int      `json:"interval"`
-	WeekStart  *string   `json:"week_start,omitempty"`
-	ByDay      *[]string `json:"by_day"`
-	ByMonth    *[]int    `json:"by_month"`
-	ByMonthday *[]int    `json:"by_monthday"`
-	Source     int       `json:"source"`
+	ScheduleId   string      `json:"schedule_id"`
+	Type         string      `json:"type"`
+	Name         string      `json:"name"`
+	Level        *int        `json:"level,omitempty"`
+	Start        string      `json:"start"`
+	Duration     int         `json:"duration"`
+	Frequency    *string     `json:"frequency"`
+	Users        *[]string   `json:"users"`
+	Interval     *int        `json:"interval"`
+	WeekStart    *string     `json:"week_start,omitempty"`
+	ByDay        *[]string   `json:"by_day"`
+	ByMonth      *[]int      `json:"by_month"`
+	ByMonthday   *[]int      `json:"by_monthday"`
+	Source       int         `json:"source"`
+	RollingUsers *[][]string `json:"rolling_users"`
 }
 
 // Create on-call shift
@@ -124,19 +126,20 @@ func (service *OnCallShiftService) CreateOnCallShift(opt *CreateOnCallShiftOptio
 }
 
 type UpdateOnCallShiftOptions struct {
-	Type       string    `json:"type"`
-	Name       string    `json:"name"`
-	Level      *int      `json:"level,omitempty"`
-	Start      string    `json:"start"`
-	Duration   int       `json:"duration"`
-	Frequency  *string   `json:"frequency"`
-	Users      *[]string `json:"users"`
-	Interval   *int      `json:"interval"`
-	WeekStart  *string   `json:"week_start,omitempty"`
-	ByDay      *[]string `json:"by_day"`
-	ByMonth    *[]int    `json:"by_month"`
-	ByMonthday *[]int    `json:"by_monthday"`
-	Source     int       `json:"source"`
+	Type         string      `json:"type"`
+	Name         string      `json:"name"`
+	Level        *int        `json:"level,omitempty"`
+	Start        string      `json:"start"`
+	Duration     int         `json:"duration"`
+	Frequency    *string     `json:"frequency"`
+	Users        *[]string   `json:"users"`
+	Interval     *int        `json:"interval"`
+	WeekStart    *string     `json:"week_start,omitempty"`
+	ByDay        *[]string   `json:"by_day"`
+	ByMonth      *[]int      `json:"by_month"`
+	ByMonthday   *[]int      `json:"by_monthday"`
+	Source       int         `json:"source"`
+	RollingUsers *[][]string `json:"rolling_users"`
 }
 
 // Updates on-call shift
