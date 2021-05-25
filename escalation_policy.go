@@ -42,8 +42,8 @@ type Escalation struct {
 	Important                *bool     `json:"important"`
 	NotifyIfTimeFrom         *string   `json:"notify_if_time_from"`
 	NotifyIfTimeTo           *string   `json:"notify_if_time_to"`
-	NumAlertsInWindow        int       `json:"num_alerts_in_window"`
-	NumMinutesInWindow       int       `json:"num_minutes_in_window"`
+	NumAlertsInWindow        *int      `json:"num_alerts_in_window"`
+	NumMinutesInWindow       *int      `json:"num_minutes_in_window"`
 }
 
 // Empty struct is here in case we want to add request params to ListEscalations.
