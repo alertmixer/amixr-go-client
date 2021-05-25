@@ -42,6 +42,8 @@ type Escalation struct {
 	Important                *bool     `json:"important"`
 	NotifyIfTimeFrom         *string   `json:"notify_if_time_from"`
 	NotifyIfTimeTo           *string   `json:"notify_if_time_to"`
+	NumAlertsInWindow        *int      `json:"num_alerts_in_window"`
+	NumMinutesInWindow       *int      `json:"num_minutes_in_window"`
 }
 
 // Empty struct is here in case we want to add request params to ListEscalations.
@@ -106,6 +108,8 @@ type CreateEscalationOptions struct {
 	Important                   *bool     `json:"important,omitempty"`
 	NotifyIfTimeFrom            string    `json:"notify_if_time_from,omitempty"`
 	NotifyIfTimeTo              string    `json:"notify_if_time_to,omitempty"`
+	NumAlertsInWindow           int       `json:"num_alerts_in_window,omitempty"`
+	NumMinutesInWindow          int       `json:"num_minutes_in_window,omitempty"`
 }
 
 // Create escalation with given name and type
@@ -144,6 +148,8 @@ type UpdateEscalationOptions struct {
 	Important                *bool     `json:"important,omitempty"`
 	NotifyIfTimeFrom         string    `json:"notify_if_time_from,omitempty"`
 	NotifyIfTimeTo           string    `json:"notify_if_time_to,omitempty"`
+	NumAlertsInWindow        int       `json:"num_alerts_in_window,omitempty"`
+	NumMinutesInWindow       int       `json:"num_minutes_in_window,omitempty"`
 }
 
 // Updates escalation with new templates and/or name. At least one field in template is required
