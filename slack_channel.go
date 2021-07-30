@@ -33,7 +33,7 @@ type ListSlackChannelOptions struct {
 	ChannelName string `url:"channel_name,omitempty" json:"channel_name,omitempty"`
 }
 
-// ListSlackChannels gets all slackChannels for authorized team
+// ListSlackChannels gets all slackChannels for authorized organization
 func (service *SlackChannelService) ListSlackChannels(opt *ListSlackChannelOptions) (*PaginatedSlackChannelsResponse, *http.Response, error) {
 	u := fmt.Sprintf("%s", service.url)
 

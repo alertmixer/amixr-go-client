@@ -39,7 +39,7 @@ type ListUserOptions struct {
 	Username string `url:"username,omitempty" json:"username,omitempty"`
 }
 
-// ListUsers gets all users for authorized team
+// ListUsers gets all users for authorized organization
 //
 // http://api-docs.amixr.io/#list-users
 func (service *UserService) ListUsers(opt *ListUserOptions) (*PaginatedUsersResponse, *http.Response, error) {

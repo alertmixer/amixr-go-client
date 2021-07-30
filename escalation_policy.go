@@ -49,7 +49,7 @@ type ListEscalationOptions struct {
 	ListOptions
 }
 
-// ListEscalations gets all escalations for authorized team
+// ListEscalations gets all escalations for authorized organization
 //
 // http://api-docs.amixr.io/#list-escalations
 func (service *EscalationService) ListEscalations(opt *ListEscalationOptions) (*PaginatedEscalationsResponse, *http.Response, error) {

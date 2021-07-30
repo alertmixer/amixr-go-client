@@ -1,6 +1,7 @@
 package amixr
 
 import (
+	"fmt"
 	"io/ioutil"
 	"net/http"
 	"net/http/httptest"
@@ -72,7 +73,7 @@ func TestCheckResponse(t *testing.T) {
 		t.Fatal("Expected error response.")
 	}
 
-	want := "GET https://amixr.io/api/v1/test: 400 {detail: error}"
+	want := fmt.Sprintf("GET %s: 400 {detail: error}", req.URL)
 
 	if errResp.Error() != want {
 		t.Errorf("Expected error: %s, got %s", want, errResp.Error())

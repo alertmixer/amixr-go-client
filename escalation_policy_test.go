@@ -12,23 +12,23 @@ var typeWait = "wait"
 var typeNotifyPersons = "notify_persons"
 
 var testEscalation = &Escalation{
-	ID:       "E3GA6SJETWWJS",
-	RouteId:  "RIYGUJXCPFHXY",
-	Position: 0,
-	Type:     &typeWait,
-	Duration: &duration,
+	ID:                "E3GA6SJETWWJS",
+	EscalationChainId: "RIYGUJXCPFHXY",
+	Position:          0,
+	Type:              &typeWait,
+	Duration:          &duration,
 }
 
 var testEscalationEmptyDuration = &Escalation{
-	ID:       "E3GA6SJETWWJS",
-	RouteId:  "RIYGUJXCPFHXY",
-	Position: 0,
-	Type:     &typeNotifyPersons,
+	ID:                "E3GA6SJETWWJS",
+	EscalationChainId: "RIYGUJXCPFHXY",
+	Position:          0,
+	Type:              &typeNotifyPersons,
 }
 
 var testEscalationBody = `{
 	"id": "E3GA6SJETWWJS",
-    "route_id": "RIYGUJXCPFHXY",
+    "escalation_chain_id": "RIYGUJXCPFHXY",
     "position": 0,
     "type": "wait",
     "duration": 60
@@ -36,14 +36,14 @@ var testEscalationBody = `{
 
 var testEscalationEmptyDurationBody = `{
 	"id": "E3GA6SJETWWJS",
-    "route_id": "RIYGUJXCPFHXY",
+    "escalation_chain_id": "RIYGUJXCPFHXY",
     "position": 0,
     "type": "notify_persons"
 }`
 
 var testUpdatedEscalationBody = `{
 	"id": "E3GA6SJETWWJS",
-    "route_id": "RIYGUJXCPFHXY",
+    "escalation_chain_id": "RIYGUJXCPFHXY",
     "position": 1,
     "type": "wait",
     "duration": 60
@@ -59,11 +59,11 @@ func TestCreateEscalation(t *testing.T) {
 	})
 	tmp := 0
 	createOptions := &CreateEscalationOptions{
-		Type:        &typeWait,
-		Position:    &tmp,
-		Duration:    60,
-		ManualOrder: true,
-		RouteId:     "RIYGUJXCPFHXY",
+		Type:              &typeWait,
+		Position:          &tmp,
+		Duration:          60,
+		ManualOrder:       true,
+		EscalationChainId: "RIYGUJXCPFHXY",
 	}
 	escalation, _, err := client.Escalations.CreateEscalation(createOptions)
 
@@ -194,11 +194,11 @@ func TestUpdateEscalation(t *testing.T) {
 	}
 	var duration = 60
 	var testUpdatedEscalation = &Escalation{
-		ID:       "E3GA6SJETWWJS",
-		RouteId:  "RIYGUJXCPFHXY",
-		Position: 1,
-		Type:     &typeWait,
-		Duration: &duration,
+		ID:                "E3GA6SJETWWJS",
+		EscalationChainId: "RIYGUJXCPFHXY",
+		Position:          1,
+		Type:              &typeWait,
+		Duration:          &duration,
 	}
 
 	want := testUpdatedEscalation

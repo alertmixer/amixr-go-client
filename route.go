@@ -47,7 +47,7 @@ type ListRouteOptions struct {
 	RoutingRegex  string `url:"routing_regex,omitempty" json:"routing_regex,omitempty"`
 }
 
-// ListRoutes gets all routes for authorized team
+// ListRoutes gets all routes for authorized organization
 //
 // http://api-docs.amixr.io/#list-routes
 func (service *RouteService) ListRoutes(opt *ListRouteOptions) (*PaginatedRoutesResponse, *http.Response, error) {

@@ -48,7 +48,7 @@ type ListOnCallShiftOptions struct {
 	Name       string `url:"name,omitempty" json:"name,omitempty"`
 }
 
-// ListOnCallShifts gets all on call shifts for authorized team
+// ListOnCallShifts gets all on call shifts for authorized organization
 func (service *OnCallShiftService) ListOnCallShifts(opt *ListOnCallShiftOptions) (*PaginatedOnCallShiftsResponse, *http.Response, error) {
 	u := fmt.Sprintf("%s/", service.url)
 

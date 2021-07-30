@@ -40,7 +40,7 @@ type ListUserGroupOptions struct {
 	SlackHandle string `url:"slack_handle,omitempty" json:"slack_handle,omitempty"`
 }
 
-// ListUserGroups gets all UserGroups for authorized team
+// ListUserGroups gets all UserGroups for authorized organization
 func (service *UserGroupService) ListUserGroups(opt *ListUserGroupOptions) (*PaginatedUserGroupsResponse, *http.Response, error) {
 	u := fmt.Sprintf("%s", service.url)
 

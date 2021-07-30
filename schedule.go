@@ -47,7 +47,7 @@ type ListScheduleOptions struct {
 	Name string `url:"name,omitempty" json:"name,omitempty"`
 }
 
-// ListSchedules gets all schedules for authorized team
+// ListSchedules gets all schedules for authorized organization
 //
 // http://api-docs.amixr.io/#list-schedules
 func (service *ScheduleService) ListSchedules(opt *ListScheduleOptions) (*PaginatedSchedulesResponse, *http.Response, error) {
