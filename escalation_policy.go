@@ -30,7 +30,7 @@ type PaginatedEscalationsResponse struct {
 
 type Escalation struct {
 	ID                       string    `json:"id"`
-	RouteId                  string    `json:"route_id"`
+	EscalationChainId        string    `json:"escalation_chain_id"`
 	Position                 int       `json:"position"`
 	Type                     *string   `json:"type"`
 	Duration                 *int      `json:"duration"`
@@ -93,7 +93,7 @@ func (service *EscalationService) GetEscalation(id string, opt *GetEscalationOpt
 }
 
 type CreateEscalationOptions struct {
-	RouteId                     string    `json:"route_id,omitempty"`
+	EscalationChainId           string    `json:"escalation_chain_id,omitempty"`
 	Position                    *int      `json:"position,omitempty"`
 	Type                        *string   `json:"type"`
 	Duration                    int       `json:"duration,omitempty"`
