@@ -35,7 +35,7 @@ type ListCustomActionOptions struct {
 	IntegrationId string `url:"integration_id,omitempty" json:"integration_id,omitempty"`
 }
 
-// ListCustomActions gets all customActions for authorized team
+// ListCustomActions gets all customActions for authorized organization
 func (service *CustomActionService) ListCustomActions(opt *ListCustomActionOptions) (*PaginatedCustomActionsResponse, *http.Response, error) {
 	u := fmt.Sprintf("%s", service.url)
 

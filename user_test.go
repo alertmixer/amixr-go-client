@@ -8,16 +8,14 @@ import (
 )
 
 var testUser = &User{
-	ID:     "U4DNY931HHJS5",
-	TeamId: "TCNPY4A1BWUMP",
-	Email:  "public-api-demo-user-1@amixr.io",
-	Role:   "admin",
-	Name:   "Alex",
+	ID:       "U4DNY931HHJS5",
+	Email:    "public-api-demo-user-1@amixr.io",
+	Role:     "admin",
+	Username: "Alex",
 }
 
 var testUserBody = `{
 	"id": "U4DNY931HHJS5",
-	"team_id": "TCNPY4A1BWUMP",
 	"email": "public-api-demo-user-1@amixr.io",
 	"slack": [
 		{
@@ -25,7 +23,7 @@ var testUserBody = `{
 			"team_id": "TALEXSLACKDJPK"
 		}
 	],
-	"name": "Alex",
+	"username": "Alex",
 	"role": "admin"
 }`
 

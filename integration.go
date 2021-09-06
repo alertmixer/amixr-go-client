@@ -54,7 +54,7 @@ type ListIntegrationOptions struct {
 	ListOptions
 }
 
-// ListIntegrations gets all integrations for authorized team
+// ListIntegrations gets all integrations for authorized organization
 //
 // http://api-docs.amixr.io/#list-integrations
 func (service *IntegrationService) ListIntegrations(opt *ListIntegrationOptions) (*PaginatedIntegrationsResponse, *http.Response, error) {

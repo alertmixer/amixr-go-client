@@ -43,15 +43,16 @@ type Client struct {
 	disableRetries bool
 	limiter        *rate.Limiter
 	// List of Services. Keep in sync with func newClient
-	Integrations  *IntegrationService
-	Escalations   *EscalationService
-	Users         *UserService
-	Schedules     *ScheduleService
-	Routes        *RouteService
-	SlackChannels *SlackChannelService
-	UserGroups    *UserGroupService
-	CustomActions *CustomActionService
-	OnCallShifts  *OnCallShiftService
+	Integrations     *IntegrationService
+	EscalationChains *EscalationChainService
+	Escalations      *EscalationService
+	Users            *UserService
+	Schedules        *ScheduleService
+	Routes           *RouteService
+	SlackChannels    *SlackChannelService
+	UserGroups       *UserGroupService
+	CustomActions    *CustomActionService
+	OnCallShifts     *OnCallShiftService
 }
 
 func NewClient(token string) (*Client, error) {
@@ -87,6 +88,7 @@ func newClient() (*Client, error) {
 
 	// Create services. Keep in sync with Client struct
 	c.Integrations = NewIntegrationService(c)
+	c.EscalationChains = NewEscalationChainService(c)
 	c.Escalations = NewEscalationService(c)
 	c.Users = NewUserService(c)
 	c.Schedules = NewScheduleService(c)

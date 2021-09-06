@@ -28,19 +28,18 @@ type PaginatedUsersResponse struct {
 }
 
 type User struct {
-	ID     string `json:"id"`
-	TeamId string `json:"team_id"`
-	Name   string `json:"name"`
-	Role   string `json:"role"`
-	Email  string `json:"email"`
+	ID       string `json:"id"`
+	Username string `json:"username"`
+	Role     string `json:"role"`
+	Email    string `json:"email"`
 }
 
 type ListUserOptions struct {
 	ListOptions
-	Email string `url:"email,omitempty" json:"email,omitempty"`
+	Username string `url:"username,omitempty" json:"username,omitempty"`
 }
 
-// ListUsers gets all users for authorized team
+// ListUsers gets all users for authorized organization
 //
 // http://api-docs.amixr.io/#list-users
 func (service *UserService) ListUsers(opt *ListUserOptions) (*PaginatedUsersResponse, *http.Response, error) {

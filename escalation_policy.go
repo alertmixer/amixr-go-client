@@ -30,7 +30,7 @@ type PaginatedEscalationsResponse struct {
 
 type Escalation struct {
 	ID                       string    `json:"id"`
-	RouteId                  string    `json:"route_id"`
+	EscalationChainId        string    `json:"escalation_chain_id"`
 	Position                 int       `json:"position"`
 	Type                     *string   `json:"type"`
 	Duration                 *int      `json:"duration"`
@@ -49,7 +49,7 @@ type ListEscalationOptions struct {
 	ListOptions
 }
 
-// ListEscalations gets all escalations for authorized team
+// ListEscalations gets all escalations for authorized organization
 //
 // http://api-docs.amixr.io/#list-escalations
 func (service *EscalationService) ListEscalations(opt *ListEscalationOptions) (*PaginatedEscalationsResponse, *http.Response, error) {
@@ -93,7 +93,7 @@ func (service *EscalationService) GetEscalation(id string, opt *GetEscalationOpt
 }
 
 type CreateEscalationOptions struct {
-	RouteId                     string    `json:"route_id,omitempty"`
+	EscalationChainId           string    `json:"escalation_chain_id,omitempty"`
 	Position                    *int      `json:"position,omitempty"`
 	Type                        *string   `json:"type"`
 	Duration                    int       `json:"duration,omitempty"`
