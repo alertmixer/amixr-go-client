@@ -35,7 +35,7 @@ type Schedule struct {
 	Name             string         `json:"name"`
 	ICalUrlPrimary   *string        `json:"ical_url_primary"`
 	ICalUrlOverrides *string        `json:"ical_url_overrides"`
-	TimeZone         *string        `json:"time_zone"`
+	TimeZone         string         `json:"time_zone"`
 	Slack            *SlackSchedule `json:"slack"`
 }
 
@@ -94,7 +94,7 @@ type CreateScheduleOptions struct {
 	Type             string         `json:"type"`
 	ICalUrlPrimary   *string        `json:"ical_url_primary"`
 	ICalUrlOverrides *string        `json:"ical_url_overrides"`
-	TimeZone         string         `json:"time_zone,omitempty"`
+	TimeZone         string         `json:"time_zone"`
 	Slack            *SlackSchedule `json:"slack,omitempty"`
 }
 
@@ -120,9 +120,9 @@ func (service *ScheduleService) CreateSchedule(opt *CreateScheduleOptions) (*Sch
 
 type UpdateScheduleOptions struct {
 	Name             string         `json:"name,omitempty"`
-	ICalUrlPrimary   *string        `json:"ical_url_primary,omitempty"`
+	ICalUrlPrimary   *string        `json:"ical_url_primary"`
 	ICalUrlOverrides *string        `json:"ical_url_overrides"`
-	TimeZone         string         `json:"time_zone,omitempty"`
+	TimeZone         string         `json:"time_zone"`
 	Slack            *SlackSchedule `json:"slack,omitempty"`
 }
 
