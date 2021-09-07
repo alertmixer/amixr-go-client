@@ -6,7 +6,7 @@ import (
 	"net/http"
 )
 
-// Handles requests to schedule endpoint
+// ScheduleService handles requests to schedule endpoint
 // Use NewScheduleService instead of direct creation ScheduleService
 //
 // http://api-docs.amixr.io/#schedules
@@ -15,7 +15,7 @@ type ScheduleService struct {
 	url    string
 }
 
-// NewSchedulesService creates ScheduleService with defined url
+// NewScheduleService creates ScheduleService with defined url
 func NewScheduleService(client *Client) *ScheduleService {
 	scheduleService := ScheduleService{}
 	scheduleService.client = client
@@ -29,13 +29,14 @@ type PaginatedSchedulesResponse struct {
 }
 
 type Schedule struct {
-	ID        string         `json:"id"`
-	Type      string         `json:"type"`
-	OnCallNow []string       `json:"on_call_now"`
-	Name      string         `json:"name"`
-	ICalUrl   *string        `json:"ical_url"`
-	TimeZone  string         `json:"time_zone"`
-	Slack     *SlackSchedule `json:"slack"`
+	ID               string         `json:"id"`
+	Type             string         `json:"type"`
+	OnCallNow        []string       `json:"on_call_now"`
+	Name             string         `json:"name"`
+	ICalUrlPrimary   *string        `json:"ical_url_primary"`
+	ICalUrlOverrides *string        `json:"ical_url_overrides"`
+	TimeZone         *string        `json:"time_zone"`
+	Slack            *SlackSchedule `json:"slack"`
 }
 
 type SlackSchedule struct {
@@ -89,10 +90,12 @@ func (service *ScheduleService) GetSchedule(id string, opt *GetScheduleOptions) 
 }
 
 type CreateScheduleOptions struct {
-	Name     string         `json:"name"`
-	ICalUrl  *string        `json:"ical_url"`
-	TimeZone string         `json:"time_zone,omitempty"`
-	Slack    *SlackSchedule `json:"slack"`
+	Name             string         `json:"name"`
+	Type             string         `json:"type"`
+	ICalUrlPrimary   *string        `json:"ical_url_primary"`
+	ICalUrlOverrides *string        `json:"ical_url_overrides"`
+	TimeZone         string         `json:"time_zone,omitempty"`
+	Slack            *SlackSchedule `json:"slack,omitempty"`
 }
 
 // Create schedule with given name
@@ -116,10 +119,11 @@ func (service *ScheduleService) CreateSchedule(opt *CreateScheduleOptions) (*Sch
 }
 
 type UpdateScheduleOptions struct {
-	Name     string         `json:"name"`
-	ICalUrl  *string        `json:"ical_url"`
-	TimeZone string         `json:"time_zone,omitempty"`
-	Slack    *SlackSchedule `json:"slack"`
+	Name             string         `json:"name,omitempty"`
+	ICalUrlPrimary   *string        `json:"ical_url_primary,omitempty"`
+	ICalUrlOverrides *string        `json:"ical_url_overrides"`
+	TimeZone         string         `json:"time_zone,omitempty"`
+	Slack            *SlackSchedule `json:"slack,omitempty"`
 }
 
 // Updates schedule
