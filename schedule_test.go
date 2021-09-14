@@ -11,11 +11,10 @@ var testScheduleSlackChannelId = "TEST_SLACK_CHANNEL_ID"
 var iCalUrl = "https://example.com/ical.ics"
 
 var testSchedule = &Schedule{
-	ID:       "SBM7DV7BKFUYU",
-	Name:     "Test Schedule",
-	Type:     "ical",
-	TimeZone: "UTC",
-	ICalUrl:  &iCalUrl,
+	ID:             "SBM7DV7BKFUYU",
+	Name:           "Test Schedule",
+	Type:           "ical",
+	ICalUrlPrimary: &iCalUrl,
 	Slack: &SlackSchedule{
 		&testScheduleSlackChannelId,
 	},
@@ -26,8 +25,7 @@ var testScheduleBody = `{
 	"id": "SBM7DV7BKFUYU",
 	"type": "ical",
 	"name": "Test Schedule",
-	"time_zone": "UTC",
-	"ical_url": "https://example.com/ical.ics",
+	"ical_url_primary": "https://example.com/ical.ics",
 	"slack": {
 		"channel_id": "TEST_SLACK_CHANNEL_ID"
 	},
@@ -47,8 +45,7 @@ func TestCreateSchedule(t *testing.T) {
 	})
 
 	createOptions := &CreateScheduleOptions{
-		Name:     "Test Schedule",
-		TimeZone: "UTC",
+		Name: "Test Schedule",
 		Slack: &SlackSchedule{
 			&testScheduleSlackChannelId,
 		},

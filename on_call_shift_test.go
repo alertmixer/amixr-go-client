@@ -14,18 +14,17 @@ var interval = 2
 var users = []string{"U4DNY931HHJS5", "U6RV9WPSL6DFW"}
 
 var testOnCallShift = &OnCallShift{
-	ID:         "OH3V5FYQEYJ6M",
-	Name:       "Test On-Call Shift",
-	ScheduleId: "SBM7DV7BKFUYU",
-	Type:       "recurrent_event",
-	Start:      "2020-09-04T13:00:00",
-	Level:      0,
-	Duration:   7200,
-	Frequency:  &frequency,
-	Interval:   &interval,
-	WeekStart:  &weekStart,
-	ByDay:      &byDay,
-	Users:      &users,
+	ID:        "OH3V5FYQEYJ6M",
+	Name:      "Test On-Call Shift",
+	Type:      "recurrent_event",
+	Start:     "2020-09-04T13:00:00",
+	Level:     0,
+	Duration:  7200,
+	Frequency: &frequency,
+	Interval:  &interval,
+	WeekStart: &weekStart,
+	ByDay:     &byDay,
+	Users:     &users,
 }
 
 var testOnCallShiftBody = `{
@@ -57,17 +56,16 @@ func TestCreateOnCallShift(t *testing.T) {
 
 	tmp := 0
 	createOptions := &CreateOnCallShiftOptions{
-		Name:       "Test On-Call Shift",
-		ScheduleId: "SBM7DV7BKFUYU",
-		Type:       "recurrent_event",
-		Start:      "2020-09-04T13:00:00",
-		Level:      &tmp,
-		Duration:   7200,
-		Frequency:  &frequency,
-		Interval:   &interval,
-		WeekStart:  &weekStart,
-		ByDay:      &byDay,
-		Users:      &users,
+		Name:      "Test On-Call Shift",
+		Type:      "recurrent_event",
+		Start:     "2020-09-04T13:00:00",
+		Level:     &tmp,
+		Duration:  7200,
+		Frequency: &frequency,
+		Interval:  &interval,
+		WeekStart: &weekStart,
+		ByDay:     &byDay,
+		Users:     &users,
 	}
 	shift, _, err := client.OnCallShifts.CreateOnCallShift(createOptions)
 

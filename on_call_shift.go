@@ -26,7 +26,6 @@ type PaginatedOnCallShiftsResponse struct {
 
 type OnCallShift struct {
 	ID           string      `json:"id"`
-	ScheduleId   string      `json:"schedule_id"`
 	Type         string      `json:"type"`
 	Name         string      `json:"name"`
 	Level        int         `json:"level"`
@@ -40,6 +39,7 @@ type OnCallShift struct {
 	ByMonth      *[]int      `json:"by_month"`
 	ByMonthday   *[]int      `json:"by_monthday"`
 	RollingUsers *[][]string `json:"rolling_users"`
+	TimeZone     *string     `json:"time_zone"`
 }
 
 type ListOnCallShiftOptions struct {
@@ -88,7 +88,6 @@ func (service *OnCallShiftService) GetOnCallShift(id string, opt *GetOnCallShift
 }
 
 type CreateOnCallShiftOptions struct {
-	ScheduleId   string      `json:"schedule_id"`
 	Type         string      `json:"type"`
 	Name         string      `json:"name"`
 	Level        *int        `json:"level,omitempty"`
@@ -103,6 +102,7 @@ type CreateOnCallShiftOptions struct {
 	ByMonthday   *[]int      `json:"by_monthday"`
 	Source       int         `json:"source"`
 	RollingUsers *[][]string `json:"rolling_users"`
+	TimeZone     *string     `json:"time_zone"`
 }
 
 // Create on-call shift
@@ -140,6 +140,7 @@ type UpdateOnCallShiftOptions struct {
 	ByMonthday   *[]int      `json:"by_monthday"`
 	Source       int         `json:"source"`
 	RollingUsers *[][]string `json:"rolling_users"`
+	TimeZone     *string     `json:"time_zone"`
 }
 
 // Updates on-call shift
