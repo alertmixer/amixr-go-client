@@ -1,6 +1,6 @@
 module github.com/alertmixer/amixr-go-client
 
-go 1.14
+go 1.16
 
 require (
 	github.com/google/go-querystring v1.0.0
