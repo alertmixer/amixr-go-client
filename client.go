@@ -59,7 +59,7 @@ func NewClient(token string) (*Client, error) {
 	if token == "" {
 		return nil, fmt.Errorf("Token required")
 	}
-	client, err := newClient()
+	client, err := newClient("") // "" indicates to use defaultBaseUrl
 	if err != nil {
 		return nil, err
 	}
@@ -67,7 +67,19 @@ func NewClient(token string) (*Client, error) {
 	return client, nil
 }
 
-func newClient() (*Client, error) {
+func NewClientWithCustomUrl(token string, url string) (*Client, error) {
+	if token == "" {
+		return nil, fmt.Errorf("Token required")
+	}
+	client, err := newClient(url)
+	if err != nil {
+		return nil, err
+	}
+	client.token = token
+	return client, nil
+}
+
+func newClient(url string) (*Client, error) {
 	c := &Client{}
 
 	// Configure the HTTP client.
@@ -84,7 +96,14 @@ func newClient() (*Client, error) {
 	c.limiter = rate.NewLimiter(limit, 50)
 
 	// Set the default base URL. _ suppress error handling
-	_ = c.setBaseURL(defaultBaseURL + apiVersionPath)
+	baseUrl := defaultBaseURL
+	if url != "" {
+		baseUrl = url
+	}
+	err := c.setBaseURL(baseUrl + apiVersionPath)
+	if err != nil {
+		return nil, err
+	}
 
 	// Create services. Keep in sync with Client struct
 	c.Integrations = NewIntegrationService(c)
