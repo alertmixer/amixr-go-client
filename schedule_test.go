@@ -51,7 +51,7 @@ func TestCreateSchedule(t *testing.T) {
 		Name: "Test Schedule",
 		Slack: &SlackSchedule{
 			&testScheduleSlackChannelId,
-    		&testScheduleSlackUsergroupId,
+			&testScheduleSlackUsergroupId,
 		},
 	}
 	schedule, _, err := client.Schedules.CreateSchedule(createOptions)
