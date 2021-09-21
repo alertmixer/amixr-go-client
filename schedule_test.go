@@ -8,6 +8,7 @@ import (
 )
 
 var testScheduleSlackChannelId = "TEST_SLACK_CHANNEL_ID"
+var testScheduleSlackUsergroupId = "TEST_SLACK_USERGROUP_ID"
 var iCalUrl = "https://example.com/ical.ics"
 
 var testSchedule = &Schedule{
@@ -17,6 +18,7 @@ var testSchedule = &Schedule{
 	ICalUrlPrimary: &iCalUrl,
 	Slack: &SlackSchedule{
 		&testScheduleSlackChannelId,
+		&testScheduleSlackUsergroupId,
 	},
 	OnCallNow: []string{"U4DNY931HHJS5", "U6RV9WPSL6DFW"},
 }
@@ -27,7 +29,8 @@ var testScheduleBody = `{
 	"name": "Test Schedule",
 	"ical_url_primary": "https://example.com/ical.ics",
 	"slack": {
-		"channel_id": "TEST_SLACK_CHANNEL_ID"
+		"channel_id": "TEST_SLACK_CHANNEL_ID",
+		"usergroup_id": "TEST_SLACK_USERGROUP_ID"
 	},
 	"on_call_now": [
 		"U4DNY931HHJS5",
@@ -48,6 +51,7 @@ func TestCreateSchedule(t *testing.T) {
 		Name: "Test Schedule",
 		Slack: &SlackSchedule{
 			&testScheduleSlackChannelId,
+    		&testScheduleSlackUsergroupId,
 		},
 	}
 	schedule, _, err := client.Schedules.CreateSchedule(createOptions)
