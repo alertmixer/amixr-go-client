@@ -42,7 +42,7 @@ type Schedule struct {
 
 type SlackSchedule struct {
 	ChannelId   *string `json:"channel_id"`
-	UsergroupId *string `json:"usergroup_id"`
+	UserGroupId *string `json:"user_group_id"`
 }
 
 type ListScheduleOptions struct {
