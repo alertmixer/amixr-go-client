@@ -53,6 +53,7 @@ type Client struct {
 	UserGroups       *UserGroupService
 	CustomActions    *CustomActionService
 	OnCallShifts     *OnCallShiftService
+	Teams            *TeamService
 }
 
 func NewClient(token string) (*Client, error) {
@@ -116,6 +117,7 @@ func newClient(url string) (*Client, error) {
 	c.UserGroups = NewUserGroupService(c)
 	c.CustomActions = NewCustomActionService(c)
 	c.OnCallShifts = NewOnCallShiftService(c)
+	c.Teams = NewTeamService(c)
 
 	return c, nil
 }
