@@ -11,6 +11,7 @@ var key = "key"
 var signal = "signal"
 var testIntegration = &Integration{
 	ID:             "CFRPV98RPR1U8",
+	TeamId:         "T3HRAP3K3IKOP",
 	Name:           "Test Grafana",
 	Type:           "grafana",
 	Link:           "https://app.amixr.io/integrations/v1/grafana/mReAoNwDm0eMwKo1mTeTwYo/",
@@ -29,6 +30,7 @@ var testIntegration = &Integration{
 
 var testIntegrationBody = `{
 	"id": "CFRPV98RPR1U8",
+	"team_id": "T3HRAP3K3IKOP",
 	"name": "Test Grafana",
 	"type": "grafana",
 	"link": "https://app.amixr.io/integrations/v1/grafana/mReAoNwDm0eMwKo1mTeTwYo/",

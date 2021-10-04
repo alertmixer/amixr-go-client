@@ -15,6 +15,7 @@ var users = []string{"U4DNY931HHJS5", "U6RV9WPSL6DFW"}
 
 var testOnCallShift = &OnCallShift{
 	ID:        "OH3V5FYQEYJ6M",
+	TeamId:    "T3HRAP3K3IKOP",
 	Name:      "Test On-Call Shift",
 	Type:      "recurrent_event",
 	Start:     "2020-09-04T13:00:00",
@@ -29,6 +30,7 @@ var testOnCallShift = &OnCallShift{
 
 var testOnCallShiftBody = `{
 	"id": "OH3V5FYQEYJ6M",
+	"team_id": "T3HRAP3K3IKOP",
 	"name" : "Test On-Call Shift",
 	"schedule_id" : "SBM7DV7BKFUYU",
 	"type" : "recurrent_event",

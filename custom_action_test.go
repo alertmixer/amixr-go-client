@@ -10,13 +10,13 @@ import (
 var testCustomAction = &CustomAction{
 	ID:            "KGEFG74LU1D8L",
 	Name:          "Test action",
-	IntegrationId: "CGEXJ922S7TXQ",
+	TeamId:        "T3HRAP3K3IKOP",
 }
 
 var testCustomActionBody = `{
 	"id": "KGEFG74LU1D8L",
 	"name": "Test action",
-	"integration_id": "CGEXJ922S7TXQ"
+	"team_id": "T3HRAP3K3IKOP"
 }`
 
 func TestListCustomActions(t *testing.T) {
@@ -29,7 +29,7 @@ func TestListCustomActions(t *testing.T) {
 	})
 
 	options := &ListCustomActionOptions{
-		IntegrationId: "CGEXJ922S7TXQ",
+		Name: "Test action",
 	}
 
 	customActions, _, err := client.CustomActions.ListCustomActions(options)

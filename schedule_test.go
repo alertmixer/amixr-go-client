@@ -13,6 +13,7 @@ var iCalUrl = "https://example.com/ical.ics"
 
 var testSchedule = &Schedule{
 	ID:             "SBM7DV7BKFUYU",
+	TeamId:         "T3HRAP3K3IKOP",
 	Name:           "Test Schedule",
 	Type:           "ical",
 	ICalUrlPrimary: &iCalUrl,
@@ -25,6 +26,7 @@ var testSchedule = &Schedule{
 
 var testScheduleBody = `{
 	"id": "SBM7DV7BKFUYU",
+	"team_id": "T3HRAP3K3IKOP",
 	"type": "ical",
 	"name": "Test Schedule",
 	"ical_url_primary": "https://example.com/ical.ics",
