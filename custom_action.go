@@ -24,15 +24,14 @@ type PaginatedCustomActionsResponse struct {
 }
 
 type CustomAction struct {
-	ID            string `json:"id"`
-	Name          string `json:"name"`
-	IntegrationId string `json:"integration_id"`
+	ID     string `json:"id"`
+	Name   string `json:"name"`
+	TeamId string `json:"team_id"`
 }
 
 type ListCustomActionOptions struct {
 	ListOptions
-	Name          string `url:"name,omitempty" json:"name,omitempty"`
-	IntegrationId string `url:"integration_id,omitempty" json:"integration_id,omitempty"`
+	Name   string `url:"name,omitempty" json:"name,omitempty"`
 }
 
 // ListCustomActions gets all customActions for authorized organization

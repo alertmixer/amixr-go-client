@@ -26,6 +26,7 @@ type PaginatedOnCallShiftsResponse struct {
 
 type OnCallShift struct {
 	ID                         string      `json:"id"`
+    TeamId                     string      `json:"team_id"`
 	Type                       string      `json:"type"`
 	Name                       string      `json:"name"`
 	Level                      int         `json:"level"`
@@ -89,6 +90,7 @@ func (service *OnCallShiftService) GetOnCallShift(id string, opt *GetOnCallShift
 }
 
 type CreateOnCallShiftOptions struct {
+    TeamId                     string      `json:"team_id"`
 	Type                       string      `json:"type"`
 	Name                       string      `json:"name"`
 	Level                      *int        `json:"level,omitempty"`
@@ -128,6 +130,7 @@ func (service *OnCallShiftService) CreateOnCallShift(opt *CreateOnCallShiftOptio
 }
 
 type UpdateOnCallShiftOptions struct {
+    TeamId                     string      `json:"team_id"`
 	Type                       string      `json:"type"`
 	Name                       string      `json:"name"`
 	Level                      *int        `json:"level,omitempty"`

@@ -25,7 +25,7 @@ type PaginatedEscalationChainsResponse struct {
 type EscalationChain struct {
 	ID        string `json:"id"`
 	Name      string `json:"name"`
-	IsDefault bool   `json:"is_default"`
+    TeamId    string `json:"team_id"`
 }
 
 type ListEscalationChainOptions struct {
@@ -72,6 +72,7 @@ func (service *EscalationChainService) GetEscalationChain(id string, opt *GetEsc
 
 type CreateEscalationChainOptions struct {
 	Name string `json:"name,omitempty"`
+    TeamId string `json:"team_id"`
 }
 
 func (service *EscalationChainService) CreateEscalationChain(opt *CreateEscalationChainOptions) (*EscalationChain, *http.Response, error) {
@@ -94,6 +95,7 @@ func (service *EscalationChainService) CreateEscalationChain(opt *CreateEscalati
 
 type UpdateEscalationChainOptions struct {
 	Name string `json:"name,omitempty"`
+	TeamId string `json:"team_id"`
 }
 
 func (service *EscalationChainService) UpdateEscalationChain(id string, opt *UpdateEscalationChainOptions) (*EscalationChain, *http.Response, error) {

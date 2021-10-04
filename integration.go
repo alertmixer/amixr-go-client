@@ -30,6 +30,7 @@ type PaginatedIntegrationsResponse struct {
 
 type Integration struct {
 	ID             string     `json:"id"`
+	TeamId         string     `json:"team_id"`
 	Name           string     `json:"name"`
 	Link           string     `json:"link"`
 	IncidentsCount int        `json:"incidents_count"`
@@ -98,6 +99,7 @@ func (service *IntegrationService) GetIntegration(id string, opt *GetIntegration
 }
 
 type CreateIntegrationOptions struct {
+	TeamId    string     `json:"team_id"`
 	Name      string     `url:"name,omitempty" json:"name,omitempty"`
 	Type      string     `url:"type,omitempty" json:"type,omitempty"`
 	Templates *Templates `url:"type,omitempty" json:"templates,omitempty"`
@@ -125,6 +127,7 @@ func (service *IntegrationService) CreateIntegration(opt *CreateIntegrationOptio
 }
 
 type UpdateIntegrationOptions struct {
+	TeamId    string     `json:"team_id"`
 	Name      string     `json:"name, omitempty"`
 	Templates *Templates `json:"templates,omitempty"`
 }
