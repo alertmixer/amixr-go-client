@@ -95,7 +95,6 @@ func (service *EscalationChainService) CreateEscalationChain(opt *CreateEscalati
 
 type UpdateEscalationChainOptions struct {
 	Name string `json:"name,omitempty"`
-	TeamId string `json:"team_id"`
 }
 
 func (service *EscalationChainService) UpdateEscalationChain(id string, opt *UpdateEscalationChainOptions) (*EscalationChain, *http.Response, error) {

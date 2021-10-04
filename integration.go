@@ -127,7 +127,6 @@ func (service *IntegrationService) CreateIntegration(opt *CreateIntegrationOptio
 }
 
 type UpdateIntegrationOptions struct {
-	TeamId    string     `json:"team_id"`
 	Name      string     `json:"name, omitempty"`
 	Templates *Templates `json:"templates,omitempty"`
 }

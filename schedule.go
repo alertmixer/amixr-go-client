@@ -124,7 +124,6 @@ func (service *ScheduleService) CreateSchedule(opt *CreateScheduleOptions) (*Sch
 }
 
 type UpdateScheduleOptions struct {
-    TeamId           string         `json:"team_id"`
 	Name             string         `json:"name,omitempty"`
 	ICalUrlPrimary   *string        `json:"ical_url_primary"`
 	ICalUrlOverrides *string        `json:"ical_url_overrides"`

@@ -130,7 +130,6 @@ func (service *OnCallShiftService) CreateOnCallShift(opt *CreateOnCallShiftOptio
 }
 
 type UpdateOnCallShiftOptions struct {
-    TeamId                     string      `json:"team_id"`
 	Type                       string      `json:"type"`
 	Name                       string      `json:"name"`
 	Level                      *int        `json:"level,omitempty"`
