@@ -5,7 +5,7 @@ import (
 	"net/http"
 )
 
-// Handles requests to team endpoint
+// TeamService handles requests to team endpoint
 type TeamService struct {
 	client *Client
 	url    string
@@ -25,9 +25,9 @@ type PaginatedTeamsResponse struct {
 }
 
 type Team struct {
-	ID     string `json:"id"`
-	Name   string `json:"name"`
-	Email  string `json:"email"`
+	ID        string `json:"id"`
+	Name      string `json:"name"`
+	Email     string `json:"email"`
 	AvatarUrl string `json:"avatar_url"`
 }
 
@@ -36,7 +36,7 @@ type ListTeamOptions struct {
 	Name string `url:"name,omitempty" json:"name,omitempty"`
 }
 
-// ListTeams gets all Teams for authorized user
+// ListTeams fetchs all Teams for authorized user
 func (service *TeamService) ListTeams(opt *ListTeamOptions) (*PaginatedTeamsResponse, *http.Response, error) {
 	u := fmt.Sprintf("%s", service.url)
 
@@ -57,7 +57,7 @@ func (service *TeamService) ListTeams(opt *ListTeamOptions) (*PaginatedTeamsResp
 type GetTeamOptions struct {
 }
 
-// Get team by given id
+// GetTeam fetches team by given id
 func (service *TeamService) GetTeam(id string, opt *GetTeamOptions) (*Team, *http.Response, error) {
 	u := fmt.Sprintf("%s/%s/", service.url, id)
 

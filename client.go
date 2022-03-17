@@ -21,7 +21,6 @@ import (
 )
 
 const (
-	defaultBaseURL = "https://amixr.io/"
 	apiVersionPath = "api/v1/"
 )
 
@@ -56,23 +55,15 @@ type Client struct {
 	Teams            *TeamService
 }
 
-func NewClient(token string) (*Client, error) {
+func New(base_url, token string) (*Client, error) {
 	if token == "" {
 		return nil, fmt.Errorf("Token required")
 	}
-	client, err := newClient("") // "" indicates to use defaultBaseUrl
-	if err != nil {
-		return nil, err
-	}
-	client.token = token
-	return client, nil
-}
 
-func NewClientWithCustomUrl(token string, url string) (*Client, error) {
-	if token == "" {
-		return nil, fmt.Errorf("Token required")
+	if base_url == "" {
+		return nil, fmt.Errorf("BaseUrl required")
 	}
-	client, err := newClient(url)
+	client, err := newClient(base_url)
 	if err != nil {
 		return nil, err
 	}
@@ -91,17 +82,13 @@ func newClient(url string) (*Client, error) {
 		RetryWaitMax: 400 * time.Millisecond,
 		RetryMax:     5,
 	}
-	// https://docs.amixr.io/#/rate-limits
+	// https://grafana.com/docs/grafana-cloud/oncall/oncall-api-reference/#rate-limits
 	baseLimit := 50.0 / 60
 	limit := rate.Limit(baseLimit)
 	c.limiter = rate.NewLimiter(limit, 50)
 
 	// Set the default base URL. _ suppress error handling
-	baseUrl := defaultBaseURL
-	if url != "" {
-		baseUrl = url
-	}
-	err := c.setBaseURL(baseUrl + apiVersionPath)
+	err := c.setBaseURL(url + apiVersionPath)
 	if err != nil {
 		return nil, err
 	}

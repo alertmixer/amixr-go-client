@@ -5,11 +5,15 @@ import (
 	"net/http"
 )
 
+// EscalationChainService handles requests to escalation chain endpoint
+//
+// https://grafana.com/docs/grafana-cloud/oncall/oncall-api-reference/escalation_chains/
 type EscalationChainService struct {
 	client *Client
 	url    string
 }
 
+// NewEscalationChainService creates EscalationChainService with corresponding url part
 func NewEscalationChainService(client *Client) *EscalationChainService {
 	escalationChainService := EscalationChainService{}
 	escalationChainService.client = client
@@ -23,9 +27,9 @@ type PaginatedEscalationChainsResponse struct {
 }
 
 type EscalationChain struct {
-	ID        string `json:"id"`
-	Name      string `json:"name"`
-    TeamId    string `json:"team_id"`
+	ID     string `json:"id"`
+	Name   string `json:"name"`
+	TeamId string `json:"team_id"`
 }
 
 type ListEscalationChainOptions struct {
@@ -33,6 +37,9 @@ type ListEscalationChainOptions struct {
 	Name string `url:"name,omitempty" json:"name,omitempty"`
 }
 
+// ListEscalationChains fetches all escalation chains for current organization.
+//
+// https://grafana.com/docs/grafana-cloud/oncall/oncall-api-reference/escalation_chains/#list-escalation-chains
 func (service *EscalationChainService) ListEscalationChains(opt *ListEscalationChainOptions) (*PaginatedEscalationChainsResponse, *http.Response, error) {
 	u := fmt.Sprintf("%s/", service.url)
 
@@ -53,6 +60,9 @@ func (service *EscalationChainService) ListEscalationChains(opt *ListEscalationC
 type GetEscalationChainOptions struct {
 }
 
+// GetEscalationChain fetches escalation chain by given id.
+//
+// https://grafana.com/docs/grafana-cloud/oncall/oncall-api-reference/escalation_chains/#get-an-escalation-chain
 func (service *EscalationChainService) GetEscalationChain(id string, opt *GetEscalationChainOptions) (*EscalationChain, *http.Response, error) {
 	u := fmt.Sprintf("%s/%s/", service.url, id)
 
@@ -71,10 +81,13 @@ func (service *EscalationChainService) GetEscalationChain(id string, opt *GetEsc
 }
 
 type CreateEscalationChainOptions struct {
-	Name string `json:"name,omitempty"`
-    TeamId string `json:"team_id"`
+	Name   string `json:"name,omitempty"`
+	TeamId string `json:"team_id"`
 }
 
+// CreateEscalationChain creates escalation chain with name and team_id.
+//
+// https://grafana.com/docs/grafana-cloud/oncall/oncall-api-reference/escalation_chains/#create-an-escalation-chain
 func (service *EscalationChainService) CreateEscalationChain(opt *CreateEscalationChainOptions) (*EscalationChain, *http.Response, error) {
 	u := fmt.Sprintf("%s/", service.url)
 	req, err := service.client.NewRequest("POST", u, opt)
@@ -97,6 +110,9 @@ type UpdateEscalationChainOptions struct {
 	Name string `json:"name,omitempty"`
 }
 
+// UpdateEscalationChain updates escalation chain with name.
+//
+// https://grafana.com/docs/grafana-cloud/oncall/oncall-api-reference/escalation_chains/#update-an-escalation-chain
 func (service *EscalationChainService) UpdateEscalationChain(id string, opt *UpdateEscalationChainOptions) (*EscalationChain, *http.Response, error) {
 	u := fmt.Sprintf("%s/%s/", service.url, id)
 
@@ -117,6 +133,9 @@ func (service *EscalationChainService) UpdateEscalationChain(id string, opt *Upd
 type DeleteEscalationChainOptions struct {
 }
 
+// DeleteEscalationChain deletes escalation chain.
+//
+// https://grafana.com/docs/grafana-cloud/oncall/oncall-api-reference/escalation_chains/#delete-an-escalation-chain
 func (service *EscalationChainService) DeleteEscalationChain(id string, opt *DeleteEscalationChainOptions) (*http.Response, error) {
 
 	u := fmt.Sprintf("%s/%s/", service.url, id)

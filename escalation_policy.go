@@ -6,10 +6,9 @@ import (
 	"net/http"
 )
 
-// Handles requests to escalation endpoint
-// Use NewEscalationService instead of direct creation EscalationService
+// EscalationService handles requests to escalation endpoint
 //
-// http://api-docs.amixr.io/#escalations
+// https://grafana.com/docs/grafana-cloud/oncall/oncall-api-reference/escalation_policies/
 type EscalationService struct {
 	client *Client
 	url    string
@@ -51,7 +50,7 @@ type ListEscalationOptions struct {
 
 // ListEscalations gets all escalations for authorized organization
 //
-// http://api-docs.amixr.io/#list-escalations
+// https://grafana.com/docs/grafana-cloud/oncall/oncall-api-reference/escalation_policies/#list-escalation-policies
 func (service *EscalationService) ListEscalations(opt *ListEscalationOptions) (*PaginatedEscalationsResponse, *http.Response, error) {
 	u := fmt.Sprintf("%s", service.url)
 
@@ -108,9 +107,9 @@ type CreateEscalationOptions struct {
 	NotifyIfTimeTo              string    `json:"notify_if_time_to,omitempty"`
 }
 
-// Create escalation with given name and type
+// CreateEscalation creates an  escalation
 //
-// http://api-docs.amixr.io/#create-escalation
+// https://grafana.com/docs/grafana-cloud/oncall/oncall-api-reference/escalation_policies/#create-an-escalation-policy
 func (service *EscalationService) CreateEscalation(opt *CreateEscalationOptions) (*Escalation, *http.Response, error) {
 	log.Printf("[DEBUG] create amixr escalation")
 	u := fmt.Sprintf("%s/", service.url)
@@ -146,9 +145,7 @@ type UpdateEscalationOptions struct {
 	NotifyIfTimeTo           string    `json:"notify_if_time_to,omitempty"`
 }
 
-// Updates escalation with new templates and/or name. At least one field in template is required
-//
-// http://api-docs.amixr.io/#update-escalation
+// UpdateEscalation updates an escalation with new templates and/or name. At least one field in template is required
 func (service *EscalationService) UpdateEscalation(id string, opt *UpdateEscalationOptions) (*Escalation, *http.Response, error) {
 	u := fmt.Sprintf("%s/%s/", service.url, id)
 
@@ -169,9 +166,9 @@ func (service *EscalationService) UpdateEscalation(id string, opt *UpdateEscalat
 type DeleteEscalationOptions struct {
 }
 
-// Deletes escalation
+// DeleteEscalation deletes an escalation
 //
-// http://api-docs.amixr.io/#delete-escalation
+// https://grafana.com/docs/grafana-cloud/oncall/oncall-api-reference/escalation_policies/#list-escalation-policies
 func (service *EscalationService) DeleteEscalation(id string, opt *DeleteEscalationOptions) (*http.Response, error) {
 
 	u := fmt.Sprintf("%s/%s/", service.url, id)

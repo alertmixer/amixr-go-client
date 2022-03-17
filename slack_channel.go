@@ -5,6 +5,9 @@ import (
 	"net/http"
 )
 
+// SlackChannelService handles requests to slack channel endpoint
+//
+// // https://grafana.com/docs/grafana-cloud/oncall/oncall-api-reference/slack_channels/
 type SlackChannelService struct {
 	client *Client
 	url    string
@@ -34,6 +37,8 @@ type ListSlackChannelOptions struct {
 }
 
 // ListSlackChannels gets all slackChannels for authorized organization
+//
+// https://grafana.com/docs/grafana-cloud/oncall/oncall-api-reference/slack_channels/#list-slack-channels
 func (service *SlackChannelService) ListSlackChannels(opt *ListSlackChannelOptions) (*PaginatedSlackChannelsResponse, *http.Response, error) {
 	u := fmt.Sprintf("%s", service.url)
 

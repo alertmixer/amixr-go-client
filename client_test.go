@@ -15,14 +15,13 @@ func setup(t *testing.T) (*http.ServeMux, *httptest.Server, *Client) {
 
 	server := httptest.NewServer(mux)
 
-	client, err := NewClient("token")
-	err = client.setBaseURL(server.URL + "/api/v1/")
+	c, err := New(server.URL, "token")
 	if err != nil {
 		server.Close()
 		t.Fatalf("Failed to create client: %v", err)
 	}
 
-	return mux, server, client
+	return mux, server, c
 }
 
 func teardown(server *httptest.Server) {
@@ -36,12 +35,12 @@ func testRequestMethod(t *testing.T, r *http.Request, want string) {
 }
 
 func TestNewClient(t *testing.T) {
-	c, err := NewClient("token")
+	c, err := New("base_url", "token")
 	if err != nil {
 		t.Fatalf("Failed to create client: %v", err)
 	}
 
-	expectedBaseURL := defaultBaseURL + apiVersionPath
+	expectedBaseURL := "base_url" + apiVersionPath
 
 	if c.BaseURL().String() != expectedBaseURL {
 		t.Errorf("NewClient BaseURL is %s, want %s", c.BaseURL().String(), expectedBaseURL)
@@ -49,7 +48,7 @@ func TestNewClient(t *testing.T) {
 }
 
 func TestCheckResponse(t *testing.T) {
-	c, err := NewClient("token")
+	c, err := New("base_url", "token")
 	if err != nil {
 		t.Fatalf("Failed to create client: %v", err)
 	}

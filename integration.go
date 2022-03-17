@@ -2,20 +2,18 @@ package amixr
 
 import (
 	"fmt"
-	"log"
 	"net/http"
 )
 
-// Handles requests to integration endpoint
-// Use NewIntegrationService instead of direct creation IntegrationService
+// IntegrationService handles requests to integration endpoint
 //
-// http://api-docs.amixr.io/#integrations
+// https://grafana.com/docs/grafana-cloud/oncall/oncall-api-reference/integrations/
 type IntegrationService struct {
 	client *Client
 	url    string
 }
 
-// NewIntegrationsService creates IntegrationService with defined url
+// NewIntegrationService creates IntegrationService with corresponding url part
 func NewIntegrationService(client *Client) *IntegrationService {
 	integrationService := IntegrationService{}
 	integrationService.client = client
@@ -29,14 +27,20 @@ type PaginatedIntegrationsResponse struct {
 }
 
 type Integration struct {
-	ID             string     `json:"id"`
-	TeamId         string     `json:"team_id"`
-	Name           string     `json:"name"`
-	Link           string     `json:"link"`
-	IncidentsCount int        `json:"incidents_count"`
-	Type           string     `json:"type"`
-	DefaultRouteId string     `json:"default_route_id"`
-	Templates      *Templates `json:"templates"`
+	ID             string        `json:"id"`
+	TeamId         string        `json:"team_id"`
+	Name           string        `json:"name"`
+	Link           string        `json:"link"`
+	IncidentsCount int           `json:"incidents_count"`
+	Type           string        `json:"type"`
+	DefaultRoute   *DefaultRoute `json:"default_route"`
+	Templates      *Templates    `json:"templates"`
+}
+
+type DefaultRoute struct {
+	ID                string      `json:"id"`
+	EscalationChainId string      `json:"escalation_chain_id"`
+	SlackRoute        *SlackRoute `json:"slack,omitempty"`
 }
 
 type Templates struct {
@@ -55,9 +59,9 @@ type ListIntegrationOptions struct {
 	ListOptions
 }
 
-// ListIntegrations gets all integrations for authorized organization
+// ListIntegrations fetches all integrations for current organization.
 //
-// http://api-docs.amixr.io/#list-integrations
+// https://grafana.com/docs/grafana-cloud/oncall/oncall-api-reference/integrations/#get-integration
 func (service *IntegrationService) ListIntegrations(opt *ListIntegrationOptions) (*PaginatedIntegrationsResponse, *http.Response, error) {
 	u := fmt.Sprintf("%s/", service.url)
 
@@ -78,9 +82,9 @@ func (service *IntegrationService) ListIntegrations(opt *ListIntegrationOptions)
 type GetIntegrationOptions struct {
 }
 
-// Get integration by given id
+// GetIntegration fetches integration by given id.
 //
-// http://api-docs.amixr.io/#get-integration
+// https://grafana.com/docs/grafana-cloud/oncall/oncall-api-reference/integrations/#get-integration
 func (service *IntegrationService) GetIntegration(id string, opt *GetIntegrationOptions) (*Integration, *http.Response, error) {
 	u := fmt.Sprintf("%s/%s/", service.url, id)
 
@@ -100,16 +104,15 @@ func (service *IntegrationService) GetIntegration(id string, opt *GetIntegration
 
 type CreateIntegrationOptions struct {
 	TeamId    string     `json:"team_id"`
-	Name      string     `url:"name,omitempty" json:"name,omitempty"`
-	Type      string     `url:"type,omitempty" json:"type,omitempty"`
-	Templates *Templates `url:"type,omitempty" json:"templates,omitempty"`
+	Name      string     `json:"name,omitempty"`
+	Type      string     `json:"type,omitempty"`
+	Templates *Templates `json:"templates,omitempty"`
 }
 
-// Create integration with given name and type
+// CreateIntegration creates integration with type, team_id and optional given name.
 //
-// http://api-docs.amixr.io/#create-integration
+// https://grafana.com/docs/grafana-cloud/oncall/oncall-api-reference/integrations/#get-integration
 func (service *IntegrationService) CreateIntegration(opt *CreateIntegrationOptions) (*Integration, *http.Response, error) {
-	log.Printf("[DEBUG] create amixr integration")
 	u := fmt.Sprintf("%s/", service.url)
 
 	req, err := service.client.NewRequest("POST", u, opt)
@@ -127,13 +130,15 @@ func (service *IntegrationService) CreateIntegration(opt *CreateIntegrationOptio
 }
 
 type UpdateIntegrationOptions struct {
-	Name      string     `json:"name, omitempty"`
-	Templates *Templates `json:"templates,omitempty"`
+	Name         string        `json:"name,omitempty"`
+	Templates    *Templates    `json:"templates,omitempty"`
+	DefaultRoute *DefaultRoute `json:"default_route,omitempty"`
 }
 
-// Updates integration with new templates and/or name. At least one field in template is required
+// UpdateIntegration updates integration with new templates, name and default route.
+// To update template it is enough to provide at least one field.
 //
-// http://api-docs.amixr.io/#update-integration
+// https://grafana.com/docs/grafana-cloud/oncall/oncall-api-reference/integrations/#update-integration
 func (service *IntegrationService) UpdateIntegration(id string, opt *UpdateIntegrationOptions) (*Integration, *http.Response, error) {
 	u := fmt.Sprintf("%s/%s/", service.url, id)
 
@@ -154,9 +159,9 @@ func (service *IntegrationService) UpdateIntegration(id string, opt *UpdateInteg
 type DeleteIntegrationOptions struct {
 }
 
-// Deletes integration
+// DeleteIntegration deletes integration.
 //
-// http://api-docs.amixr.io/#delete-integration
+// https://grafana.com/docs/grafana-cloud/oncall/oncall-api-reference/integrations/#delete-integration
 func (service *IntegrationService) DeleteIntegration(id string, opt *DeleteIntegrationOptions) (*http.Response, error) {
 
 	u := fmt.Sprintf("%s/%s/", service.url, id)

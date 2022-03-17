@@ -5,12 +5,15 @@ import (
 	"net/http"
 )
 
+// UserGroupService handles requests for user group endpoint
+//
+// https://grafana.com/docs/grafana-cloud/oncall/oncall-api-reference/user_groups/
 type UserGroupService struct {
 	client *Client
 	url    string
 }
 
-// NewUserGroup creates UserGroupService with defined url
+// NewUserGroupService creates UserGroupService with defined url
 func NewUserGroupService(client *Client) *UserGroupService {
 	userGroupService := UserGroupService{}
 	userGroupService.client = client
@@ -41,6 +44,8 @@ type ListUserGroupOptions struct {
 }
 
 // ListUserGroups gets all UserGroups for authorized organization
+//
+// https://grafana.com/docs/grafana-cloud/oncall/oncall-api-reference/user_groups/#list-user-groups
 func (service *UserGroupService) ListUserGroups(opt *ListUserGroupOptions) (*PaginatedUserGroupsResponse, *http.Response, error) {
 	u := fmt.Sprintf("%s", service.url)
 

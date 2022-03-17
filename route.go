@@ -6,16 +6,15 @@ import (
 	"net/http"
 )
 
-// Handles requests to route endpoint
-// Use NewRouteService instead of direct creation RouteService
+// RouteService handles requests to route endpoint
 //
-// http://api-docs.amixr.io/#routes
+// https://grafana.com/docs/grafana-cloud/oncall/oncall-api-reference/routes/
 type RouteService struct {
 	client *Client
 	url    string
 }
 
-// NewRoutesService creates RouteService with defined url
+// NewRouteService creates RouteService with defined url
 func NewRouteService(client *Client) *RouteService {
 	routeService := RouteService{}
 	routeService.client = client
@@ -48,9 +47,9 @@ type ListRouteOptions struct {
 	RoutingRegex  string `url:"routing_regex,omitempty" json:"routing_regex,omitempty"`
 }
 
-// ListRoutes gets all routes for authorized organization
+// ListRoutes fetches all routes for authorized organization
 //
-// http://api-docs.amixr.io/#list-routes
+// https://grafana.com/docs/grafana-cloud/oncall/oncall-api-reference/routes/#list-routes
 func (service *RouteService) ListRoutes(opt *ListRouteOptions) (*PaginatedRoutesResponse, *http.Response, error) {
 	u := fmt.Sprintf("%s", service.url)
 
@@ -71,9 +70,9 @@ func (service *RouteService) ListRoutes(opt *ListRouteOptions) (*PaginatedRoutes
 type GetRouteOptions struct {
 }
 
-// Get route by given id
+// GetRoute fetches route by given id
 //
-// http://api-docs.amixr.io/#get-route
+// https://grafana.com/docs/grafana-cloud/oncall/oncall-api-reference/routes/#get-a-route
 func (service *RouteService) GetRoute(id string, opt *GetRouteOptions) (*Route, *http.Response, error) {
 	u := fmt.Sprintf("%s/%s/", service.url, id)
 
@@ -95,16 +94,15 @@ type CreateRouteOptions struct {
 	IntegrationId     string      `json:"integration_id,omitempty"`
 	EscalationChainId string      `json:"escalation_chain_id,omitempty"`
 	Position          *int        `json:"position,omitempty"`
-	RoutingRegex      string      `json:"routing_regex, omitempty"`
+	RoutingRegex      string      `json:"routing_regex,omitempty"`
 	Slack             *SlackRoute `json:"slack,omitempty"`
 	ManualOrder       bool        `url:"manual_order,omitempty" json:"manual_order,omitempty"`
 }
 
-// Create route with given name and type
+// CreateRoute creates route with given name and type
 //
-// http://api-docs.amixr.io/#create-route
+// https://grafana.com/docs/grafana-cloud/oncall/oncall-api-reference/routes/#create-a-route
 func (service *RouteService) CreateRoute(opt *CreateRouteOptions) (*Route, *http.Response, error) {
-	log.Printf("[DEBUG] create amixr route")
 	u := fmt.Sprintf("%s/", service.url)
 	req, err := service.client.NewRequest("POST", u, opt)
 	if err != nil {
@@ -127,13 +125,13 @@ type UpdateRouteOptions struct {
 	EscalationChainId string      `json:"escalation_chain_id,omitempty"`
 	Position          *int        `json:"position,omitempty"`
 	Slack             *SlackRoute `json:"slack,omitempty"`
-	RoutingRegex      string      `json:"routing_regex, omitempty"`
+	RoutingRegex      string      `json:"routing_regex,omitempty"`
 	ManualOrder       bool        `url:"manual_order,omitempty" json:"manual_order,omitempty"`
 }
 
-// Updates route with new templates and/or name. At least one field in template is required
+// UpdateRoute updates route with new templates and/or name. At least one field in template is required
 //
-// http://api-docs.amixr.io/#update-route
+// https://grafana.com/docs/grafana-cloud/oncall/oncall-api-reference/routes/#update-route
 func (service *RouteService) UpdateRoute(id string, opt *UpdateRouteOptions) (*Route, *http.Response, error) {
 	u := fmt.Sprintf("%s/%s/", service.url, id)
 
@@ -154,9 +152,9 @@ func (service *RouteService) UpdateRoute(id string, opt *UpdateRouteOptions) (*R
 type DeleteRouteOptions struct {
 }
 
-// Deletes route
+// DeleteRoute deletes route
 //
-// http://api-docs.amixr.io/#delete-route
+// https://grafana.com/docs/grafana-cloud/oncall/oncall-api-reference/routes/#delete-a-route
 func (service *RouteService) DeleteRoute(id string, opt *DeleteRouteOptions) (*http.Response, error) {
 
 	u := fmt.Sprintf("%s/%s/", service.url, id)

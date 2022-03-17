@@ -5,6 +5,9 @@ import (
 	"net/http"
 )
 
+// CustomActionService handles requests to outgoing webhook endpoint
+//
+// https://grafana.com/docs/grafana-cloud/oncall/oncall-api-reference/outgoing_webhooks/
 type CustomActionService struct {
 	client *Client
 	url    string
@@ -31,10 +34,12 @@ type CustomAction struct {
 
 type ListCustomActionOptions struct {
 	ListOptions
-	Name   string `url:"name,omitempty" json:"name,omitempty"`
+	Name string `url:"name,omitempty" json:"name,omitempty"`
 }
 
-// ListCustomActions gets all customActions for authorized organization
+// ListCustomActions fetches all customActions for authorized organization
+//
+// https://grafana.com/docs/grafana-cloud/oncall/oncall-api-reference/outgoing_webhooks/#list-actions
 func (service *CustomActionService) ListCustomActions(opt *ListCustomActionOptions) (*PaginatedCustomActionsResponse, *http.Response, error) {
 	u := fmt.Sprintf("%s", service.url)
 

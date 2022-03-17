@@ -6,12 +6,15 @@ import (
 	"net/http"
 )
 
+// OnCallShiftService handles requests to on-call shoft endpoint
+//
+// // https://grafana.com/docs/grafana-cloud/oncall/oncall-api-reference/on_call_shifts/
 type OnCallShiftService struct {
 	client *Client
 	url    string
 }
 
-// NewOnCallShiftServiceService creates OnCallShiftService with defined url
+// NewOnCallShiftService creates OnCallShiftService with defined url
 func NewOnCallShiftService(client *Client) *OnCallShiftService {
 	onCallShiftService := OnCallShiftService{}
 	onCallShiftService.client = client
@@ -26,7 +29,7 @@ type PaginatedOnCallShiftsResponse struct {
 
 type OnCallShift struct {
 	ID                         string      `json:"id"`
-    TeamId                     string      `json:"team_id"`
+	TeamId                     string      `json:"team_id"`
 	Type                       string      `json:"type"`
 	Name                       string      `json:"name"`
 	Level                      int         `json:"level"`
@@ -50,7 +53,9 @@ type ListOnCallShiftOptions struct {
 	Name       string `url:"name,omitempty" json:"name,omitempty"`
 }
 
-// ListOnCallShifts gets all on call shifts for authorized organization
+// ListOnCallShifts fetches all on-call shifts for authorized organization
+//
+// https://grafana.com/docs/grafana-cloud/oncall/oncall-api-reference/on_call_shifts/#list-oncall-shifts
 func (service *OnCallShiftService) ListOnCallShifts(opt *ListOnCallShiftOptions) (*PaginatedOnCallShiftsResponse, *http.Response, error) {
 	u := fmt.Sprintf("%s/", service.url)
 
@@ -71,7 +76,9 @@ func (service *OnCallShiftService) ListOnCallShifts(opt *ListOnCallShiftOptions)
 type GetOnCallShiftOptions struct {
 }
 
-// Get on-call shift by given id
+// GetOnCallShift fetches shift by given id
+//
+// https://grafana.com/docs/grafana-cloud/oncall/oncall-api-reference/on_call_shifts/#get-oncall-shifts
 func (service *OnCallShiftService) GetOnCallShift(id string, opt *GetOnCallShiftOptions) (*OnCallShift, *http.Response, error) {
 	u := fmt.Sprintf("%s/%s/", service.url, id)
 
@@ -90,7 +97,7 @@ func (service *OnCallShiftService) GetOnCallShift(id string, opt *GetOnCallShift
 }
 
 type CreateOnCallShiftOptions struct {
-    TeamId                     string      `json:"team_id"`
+	TeamId                     string      `json:"team_id"`
 	Type                       string      `json:"type"`
 	Name                       string      `json:"name"`
 	Level                      *int        `json:"level,omitempty"`
@@ -109,7 +116,9 @@ type CreateOnCallShiftOptions struct {
 	StartRotationFromUserIndex *int        `json:"start_rotation_from_user_index"`
 }
 
-// Create on-call shift
+// CreateOnCallShift creates an on-call shift
+//
+// https://grafana.com/docs/grafana-cloud/oncall/oncall-api-reference/on_call_shifts/#create-an-oncall-shift
 func (service *OnCallShiftService) CreateOnCallShift(opt *CreateOnCallShiftOptions) (*OnCallShift, *http.Response, error) {
 	log.Printf("[DEBUG] create amixr on_call_shift")
 	u := fmt.Sprintf("%s/", service.url)
@@ -148,7 +157,9 @@ type UpdateOnCallShiftOptions struct {
 	StartRotationFromUserIndex *int        `json:"start_rotation_from_user_index"`
 }
 
-// Updates on-call shift
+// UpdateOnCallShift updates on-call shift
+//
+// https://grafana.com/docs/grafana-cloud/oncall/oncall-api-reference/on_call_shifts/#update-oncall-shift
 func (service *OnCallShiftService) UpdateOnCallShift(id string, opt *UpdateOnCallShiftOptions) (*OnCallShift, *http.Response, error) {
 	u := fmt.Sprintf("%s/%s/", service.url, id)
 
@@ -169,7 +180,9 @@ func (service *OnCallShiftService) UpdateOnCallShift(id string, opt *UpdateOnCal
 type DeleteOnCallShiftOptions struct {
 }
 
-// Deletes on-call shift
+// DeleteOnCallShift deletes on-call shift
+//
+// https://grafana.com/docs/grafana-cloud/oncall/oncall-api-reference/on_call_shifts/#delete-oncall-shift
 func (service *OnCallShiftService) DeleteOnCallShift(id string, opt *DeleteOnCallShiftOptions) (*http.Response, error) {
 
 	u := fmt.Sprintf("%s/%s/", service.url, id)

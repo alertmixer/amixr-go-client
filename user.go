@@ -5,16 +5,15 @@ import (
 	"net/http"
 )
 
-// Handles requests to user endpoint
-// Use NewUserService instead of direct creation UserService
+// UserService handles requests to user endpoint
 //
-// http://api-docs.amixr.io/#users
+// https://grafana.com/docs/grafana-cloud/oncall/oncall-api-reference/users/
 type UserService struct {
 	client *Client
 	url    string
 }
 
-// NewUsersService creates UserService with defined url
+// NewUserService creates UserService with defined url
 func NewUserService(client *Client) *UserService {
 	userService := UserService{}
 	userService.client = client
@@ -39,9 +38,9 @@ type ListUserOptions struct {
 	Username string `url:"username,omitempty" json:"username,omitempty"`
 }
 
-// ListUsers gets all users for authorized organization
+// ListUsers fetches all users for authorized organization.
 //
-// http://api-docs.amixr.io/#list-users
+// https://grafana.com/docs/grafana-cloud/oncall/oncall-api-reference/users/
 func (service *UserService) ListUsers(opt *ListUserOptions) (*PaginatedUsersResponse, *http.Response, error) {
 	u := fmt.Sprintf("%s/", service.url)
 
@@ -62,9 +61,9 @@ func (service *UserService) ListUsers(opt *ListUserOptions) (*PaginatedUsersResp
 type GetUserOptions struct {
 }
 
-// Get user by given id
+// GetUser fetches a user by given id.
 //
-// http://api-docs.amixr.io/#get-user
+// https://grafana.com/docs/grafana-cloud/oncall/oncall-api-reference/users/#get-a-user
 func (service *UserService) GetUser(id string, opt *GetUserOptions) (*User, *http.Response, error) {
 	u := fmt.Sprintf("%s/%s/", service.url, id)
 

@@ -7,9 +7,8 @@ import (
 )
 
 // ScheduleService handles requests to schedule endpoint
-// Use NewScheduleService instead of direct creation ScheduleService
 //
-// http://api-docs.amixr.io/#schedules
+// https://grafana.com/docs/grafana-cloud/oncall/oncall-api-reference/schedules/
 type ScheduleService struct {
 	client *Client
 	url    string
@@ -30,7 +29,7 @@ type PaginatedSchedulesResponse struct {
 
 type Schedule struct {
 	ID               string         `json:"id"`
-    TeamId           string         `json:"team_id"`
+	TeamId           string         `json:"team_id"`
 	Type             string         `json:"type"`
 	OnCallNow        []string       `json:"on_call_now"`
 	Name             string         `json:"name"`
@@ -51,9 +50,9 @@ type ListScheduleOptions struct {
 	Name string `url:"name,omitempty" json:"name,omitempty"`
 }
 
-// ListSchedules gets all schedules for authorized organization
+// ListSchedules fetches all schedules for authorized organization
 //
-// http://api-docs.amixr.io/#list-schedules
+// https://grafana.com/docs/grafana-cloud/oncall/oncall-api-reference/schedules/#list-schedules
 func (service *ScheduleService) ListSchedules(opt *ListScheduleOptions) (*PaginatedSchedulesResponse, *http.Response, error) {
 	u := fmt.Sprintf("%s/", service.url)
 
@@ -74,7 +73,9 @@ func (service *ScheduleService) ListSchedules(opt *ListScheduleOptions) (*Pagina
 type GetScheduleOptions struct {
 }
 
-// Get schedule shift by given id
+// GetSchedule fetches a schedule by given id
+//
+// https://grafana.com/docs/grafana-cloud/oncall/oncall-api-reference/schedules/#get-a-schedule
 func (service *ScheduleService) GetSchedule(id string, opt *GetScheduleOptions) (*Schedule, *http.Response, error) {
 	u := fmt.Sprintf("%s/%s/", service.url, id)
 
@@ -93,7 +94,7 @@ func (service *ScheduleService) GetSchedule(id string, opt *GetScheduleOptions) 
 }
 
 type CreateScheduleOptions struct {
-    TeamId           string         `json:"team_id"`
+	TeamId           string         `json:"team_id"`
 	Name             string         `json:"name"`
 	Type             string         `json:"type"`
 	ICalUrlPrimary   *string        `json:"ical_url_primary"`
@@ -103,7 +104,9 @@ type CreateScheduleOptions struct {
 	Shifts           *[]string      `json:"shifts"`
 }
 
-// Create schedule with given name
+// CreateSchedule creates a schedule with given name, type and other parameters depending on type/
+//
+// https://grafana.com/docs/grafana-cloud/oncall/oncall-api-reference/schedules/#create-a-schedule
 func (service *ScheduleService) CreateSchedule(opt *CreateScheduleOptions) (*Schedule, *http.Response, error) {
 	log.Printf("[DEBUG] create amixr schedule")
 	u := fmt.Sprintf("%s/", service.url)
@@ -132,7 +135,9 @@ type UpdateScheduleOptions struct {
 	Shifts           *[]string      `json:"shifts"`
 }
 
-// Updates schedule
+// UpdateSchedule updates a schedule.
+//
+// https://grafana.com/docs/grafana-cloud/oncall/oncall-api-reference/schedules/#update-a-schedule
 func (service *ScheduleService) UpdateSchedule(id string, opt *UpdateScheduleOptions) (*Schedule, *http.Response, error) {
 	u := fmt.Sprintf("%s/%s/", service.url, id)
 
@@ -153,7 +158,9 @@ func (service *ScheduleService) UpdateSchedule(id string, opt *UpdateScheduleOpt
 type DeleteScheduleOptions struct {
 }
 
-// Deletes schedule
+// DeleteSchedule deletes a schedule.
+//
+// https://grafana.com/docs/grafana-cloud/oncall/oncall-api-reference/schedules/#delete-a-schedule
 func (service *ScheduleService) DeleteSchedule(id string, opt *DeleteScheduleOptions) (*http.Response, error) {
 
 	u := fmt.Sprintf("%s/%s/", service.url, id)
