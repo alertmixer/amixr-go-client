@@ -1,4 +1,4 @@
-package amixr
+package aapi
 
 import (
 	"fmt"
@@ -8,9 +8,9 @@ import (
 )
 
 var testTeam = &Team{
-	ID:   "T3HRAP3K3IKOP",
-	Name: "test team",
-	Email: "test@test",
+	ID:        "T3HRAP3K3IKOP",
+	Name:      "test team",
+	Email:     "test@test",
 	AvatarUrl: "https://example.com/avatar",
 }
 

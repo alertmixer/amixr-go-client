@@ -1,4 +1,4 @@
-package amixr
+package aapi
 
 import (
 	"fmt"
@@ -9,14 +9,14 @@ import (
 
 var testUser = &User{
 	ID:       "U4DNY931HHJS5",
-	Email:    "public-api-demo-user-1@amixr.io",
+	Email:    "public-api-demo-user-1@grafana.com",
 	Role:     "admin",
 	Username: "Alex",
 }
 
 var testUserBody = `{
 	"id": "U4DNY931HHJS5",
-	"email": "public-api-demo-user-1@amixr.io",
+	"email": "public-api-demo-user-1@grafana.com",
 	"slack": [
 		{
 			"user_id": "UALEXSLACKDJPK",

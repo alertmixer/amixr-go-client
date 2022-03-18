@@ -1,4 +1,4 @@
-package amixr
+package aapi
 
 import (
 	"fmt"
@@ -10,12 +10,14 @@ import (
 var key = "key"
 var signal = "signal"
 var testIntegration = &Integration{
-	ID:             "CFRPV98RPR1U8",
-	TeamId:         "T3HRAP3K3IKOP",
-	Name:           "Test Grafana",
-	Type:           "grafana",
-	Link:           "https://app.amixr.io/integrations/v1/grafana/mReAoNwDm0eMwKo1mTeTwYo/",
-	DefaultRouteId: "RIYGUJXCPFHXY",
+	ID:     "CFRPV98RPR1U8",
+	TeamId: "T3HRAP3K3IKOP",
+	Name:   "Test Grafana",
+	Type:   "grafana",
+	Link:   "https://grafana_url/integrations/v1/grafana/mReAoNwDm0eMwKo1mTeTwYo/",
+	DefaultRoute: &DefaultRoute{
+		ID: "RIYGUJXCPFHXY",
+	},
 	IncidentsCount: 0,
 	Templates: &Templates{
 		&key,
@@ -33,7 +35,7 @@ var testIntegrationBody = `{
 	"team_id": "T3HRAP3K3IKOP",
 	"name": "Test Grafana",
 	"type": "grafana",
-	"link": "https://app.amixr.io/integrations/v1/grafana/mReAoNwDm0eMwKo1mTeTwYo/",
+	"link": "https://grafana_url/integrations/v1/grafana/mReAoNwDm0eMwKo1mTeTwYo/",
 	"default_route_id": "RIYGUJXCPFHXY",
 	"incidents_count": 0,
 	"templates": {

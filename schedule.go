@@ -1,8 +1,7 @@
-package amixr
+package aapi
 
 import (
 	"fmt"
-	"log"
 	"net/http"
 )
 
@@ -108,7 +107,6 @@ type CreateScheduleOptions struct {
 //
 // https://grafana.com/docs/grafana-cloud/oncall/oncall-api-reference/schedules/#create-a-schedule
 func (service *ScheduleService) CreateSchedule(opt *CreateScheduleOptions) (*Schedule, *http.Response, error) {
-	log.Printf("[DEBUG] create amixr schedule")
 	u := fmt.Sprintf("%s/", service.url)
 	req, err := service.client.NewRequest("POST", u, opt)
 	if err != nil {

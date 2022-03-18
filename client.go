@@ -1,4 +1,4 @@
-package amixr
+package aapi
 
 import (
 	"context"

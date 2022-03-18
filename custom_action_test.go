@@ -1,4 +1,4 @@
-package amixr
+package aapi
 
 import (
 	"fmt"
@@ -8,9 +8,9 @@ import (
 )
 
 var testCustomAction = &CustomAction{
-	ID:            "KGEFG74LU1D8L",
-	Name:          "Test action",
-	TeamId:        "T3HRAP3K3IKOP",
+	ID:     "KGEFG74LU1D8L",
+	Name:   "Test action",
+	TeamId: "T3HRAP3K3IKOP",
 }
 
 var testCustomActionBody = `{

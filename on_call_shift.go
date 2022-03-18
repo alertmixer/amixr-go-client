@@ -1,8 +1,7 @@
-package amixr
+package aapi
 
 import (
 	"fmt"
-	"log"
 	"net/http"
 )
 
@@ -120,7 +119,6 @@ type CreateOnCallShiftOptions struct {
 //
 // https://grafana.com/docs/grafana-cloud/oncall/oncall-api-reference/on_call_shifts/#create-an-oncall-shift
 func (service *OnCallShiftService) CreateOnCallShift(opt *CreateOnCallShiftOptions) (*OnCallShift, *http.Response, error) {
-	log.Printf("[DEBUG] create amixr on_call_shift")
 	u := fmt.Sprintf("%s/", service.url)
 	req, err := service.client.NewRequest("POST", u, opt)
 	if err != nil {

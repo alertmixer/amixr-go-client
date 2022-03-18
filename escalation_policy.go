@@ -1,4 +1,4 @@
-package amixr
+package aapi
 
 import (
 	"fmt"
@@ -14,7 +14,7 @@ type EscalationService struct {
 	url    string
 }
 
-// NewEscalationsService creates EscalationService with defined url
+// NewEscalationService creates EscalationService with defined url
 func NewEscalationService(client *Client) *EscalationService {
 	escalationService := EscalationService{}
 	escalationService.client = client
@@ -71,9 +71,9 @@ func (service *EscalationService) ListEscalations(opt *ListEscalationOptions) (*
 type GetEscalationOptions struct {
 }
 
-// Get escalation by given id
+// GetEscalation fetches an escalation by given id
 //
-// http://api-docs.amixr.io/#get-escalation
+// https://grafana.com/docs/grafana-cloud/oncall/oncall-api-reference/escalation_policies/#get-an-escalation-policy
 func (service *EscalationService) GetEscalation(id string, opt *GetEscalationOptions) (*Escalation, *http.Response, error) {
 	u := fmt.Sprintf("%s/%s/", service.url, id)
 
@@ -111,7 +111,6 @@ type CreateEscalationOptions struct {
 //
 // https://grafana.com/docs/grafana-cloud/oncall/oncall-api-reference/escalation_policies/#create-an-escalation-policy
 func (service *EscalationService) CreateEscalation(opt *CreateEscalationOptions) (*Escalation, *http.Response, error) {
-	log.Printf("[DEBUG] create amixr escalation")
 	u := fmt.Sprintf("%s/", service.url)
 	req, err := service.client.NewRequest("POST", u, opt)
 	if err != nil {
