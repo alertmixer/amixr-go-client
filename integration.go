@@ -39,7 +39,7 @@ type Integration struct {
 
 type DefaultRoute struct {
 	ID                string      `json:"id"`
-	EscalationChainId string      `json:"escalation_chain_id"`
+	EscalationChainId *string     `json:"escalation_chain_id"`
 	SlackRoute        *SlackRoute `json:"slack,omitempty"`
 }
 
